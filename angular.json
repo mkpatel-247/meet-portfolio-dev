@@ -67,6 +67,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "meet-portfolio:build"
+          },
           "configurations": {
             "production": {
               "buildTarget": "meet-portfolio:build:production"
