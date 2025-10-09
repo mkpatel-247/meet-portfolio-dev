@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/meet-portfolio",
+            "outputPath": "dist/meet-portfolio/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -83,7 +83,10 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "meet-portfolio:build"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -101,7 +104,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/aos/dist/aos.css"
             ],
             "scripts": []
           }

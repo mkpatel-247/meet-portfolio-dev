@@ -1,5 +1,7 @@
-@import "aos/dist/aos.css";
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+// @import "aos/dist/aos.css";
 
 /* You can add global styles to this file, and also import other style files */
 /* --- Enhanced CSS Variables with Modern Color Palette --- */
