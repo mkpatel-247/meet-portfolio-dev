@@ -4,13 +4,14 @@ import {
   PLATFORM_ID,
   OnInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './content/navbar/navbar.component';
 import { FooterComponent } from './content/footer/footer.component';
 import { HeroComponent } from './hero/hero.component';
 import { isPlatformBrowser } from '@angular/common';
-import * as AOS from 'aos';
+import Aos, * as AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,17 @@ import * as AOS from 'aos';
 export class AppComponent implements OnInit {
   title = 'meet-portfolio';
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
+  ) {}
   ngOnInit(): void {
-    AOS.init();
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        Aos.init({ once: true });
+        this.cdr.markForCheck();
+      }, 3000);
+    }
   }
 
   ngAfterViewInit(): void {
