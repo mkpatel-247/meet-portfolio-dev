@@ -139,7 +139,7 @@ body.light .work-item:hover {
 /* Enhanced Hero Section Styling */
 .hero-name {
   background: linear-gradient(
-    135deg,
+    90deg,
     #ff6b35 30%,
     var(--accent-color) 100%,
     #ff6b35 10%
@@ -149,12 +149,15 @@ body.light .work-item:hover {
   background-clip: text;
   background-size: 200% auto;
   color: transparent;
-  animation: shine 3s ease-in-out infinite;
+  animation: shine 3s ease-in infinite;
 }
 
 @keyframes shine {
   0% {
     background-position: 200% center;
+  }
+  50% {
+    background-position: 100% center;
   }
   100% {
     background-position: -200% center;

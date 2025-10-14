@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit {
   toggleTheme(): void {
     if (this.isBrowser) {
       this.themeService.toggleTheme();
+      this.systemTheme = this.themeService.isDarkTheme() ? 'dark' : 'light';
     }
   }
 }

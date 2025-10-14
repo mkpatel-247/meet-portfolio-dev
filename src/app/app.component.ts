@@ -12,11 +12,20 @@ import { FooterComponent } from './content/footer/footer.component';
 import { HeroComponent } from './hero/hero.component';
 import { isPlatformBrowser } from '@angular/common';
 import Aos, * as AOS from 'aos';
+import { AboutComponent } from './about/about.component';
+import { SkillsComponent } from './skills/skills.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, HeroComponent],
+  imports: [
+    RouterOutlet,
+    NavbarComponent,
+    FooterComponent,
+    HeroComponent,
+    AboutComponent,
+    SkillsComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
