@@ -78,5 +78,61 @@ export class SkillsComponent {
       label: 'Docker',
       value: 'docker',
     },
+    {
+      label: 'Nginx',
+      value: 'nginx',
+    },
+    {
+      label: 'Java',
+      value: 'java',
+    },
+    {
+      label: 'jQuery',
+      value: 'jquery',
+    },
+    {
+      label: 'Node.js',
+      value: 'nodejs',
+    },
+    {
+      label: 'Nest.js',
+      value: 'nestjs',
+    },
+    {
+      label: 'React',
+      value: 'react',
+    },
+    {
+      label: 'Express.js',
+      value: 'expressjs',
+    },
+    {
+      label: 'MongoDB',
+      value: 'mongodb',
+    },
+    {
+      label: 'MySQL',
+      value: 'mysql',
+    },
+    {
+      label: 'Go',
+      value: 'golang',
+    },
+    {
+      label: 'Python',
+      value: 'python',
+    },
+    {
+      label: 'Redis',
+      value: 'redis',
+    },
+    {
+      label: 'Django',
+      value: 'django',
+    },
+    {
+      label: 'Spring',
+      value: 'spring',
+    },
   ];
 }

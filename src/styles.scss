@@ -305,13 +305,16 @@ body.light .hero-name {
   justify-content: center;
   width: 80px;
   height: 80px;
-  background: linear-gradient(145deg, var(--card-dark), var(--card-dark-hover));
-  border: 2px solid var(--border-dark);
   border-radius: 20px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   animation: float 6s ease-in-out infinite;
   box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.dark .tech-icon {
+  background: linear-gradient(145deg, var(--card-dark), var(--card-dark-hover));
+  border: 2px solid var(--border-dark);
 }
 
 .tech-icon:hover {
