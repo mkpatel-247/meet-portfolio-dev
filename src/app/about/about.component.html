@@ -1,1 +1,53 @@
-<p>about works!</p>
+<section id="about" class="py-20 md:py-32">
+  <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 relative">
+    <span
+      class="text-gray-400 opacity-20 absolute -left-10 text-9xl top-1/2 transform -translate-y-1/2 -z-10 hidden md:block">About</span>
+    <span class="accent-text">//</span> About Me
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <!-- Left Column: Avatar & Quick Info -->
+    <div class="md:col-span-1 space-y-6">
+      <img src="https://placehold.co/300x300/1F2937/ffffff?text=Meet+Patel" alt="Meet Patel Avatar"
+        class="w-full h-auto rounded-xl object-cover border-4 border-[--accent-color] shadow-2xl transition duration-500 hover:scale-[1.02] transform hover:shadow-[0_0_30px_rgba(255,140,0,0.5)]">
+      <div class="text-sm font-mono text-gray-400 text-muted border-t border-gray-800 light:border-gray-300 pt-6">
+        <p>Location: Ahmadabad, Gujarat</p>
+        <p>Role: Software Engineer</p>
+        <p>Tech Focus: Angular, Node, AWS</p>
+      </div>
+    </div>
+
+    <!-- Right Column: Narrative Text -->
+    <div class="md:col-span-2 space-y-6 text-lg text-gray-400 text-muted leading-relaxed">
+      <p>I started my journey in distributed systems and quickly found my passion in bridging complex back-end logic
+        with beautiful, performant front-end experiences. My expertise lies in designing and implementing full-stack
+        solutions that are not only scalable but also maintainable and tested end-to-end.</p>
+
+      <p>Over the last eight years, I have architected and led teams through multiple digital transformation
+        projects, specializing in high-traffic applications, real-time data processing, and cloud cost optimization
+        on AWS.</p>
+
+      <p>Here are a few technologies I've been working with recently:</p>
+      <ul class="grid grid-cols-2 list-none p-0 m-0 font-medium text-muted">
+        <li class="flex items-center space-x-2"><span class="accent-text text-xl">&rarr;</span>
+          TypeScript
+        </li>
+        <li class="flex items-center space-x-2"><span class="accent-text text-xl">&rarr;</span>
+          Angular
+        </li>
+        <li class="flex items-center space-x-2"><span class="accent-text text-xl">&rarr;</span>
+          Node.js (Express)
+        </li>
+        <li class="flex items-center space-x-2"><span class="accent-text text-xl">&rarr;</span>
+          AWS Lambda / RDS
+        </li>
+        <li class="flex items-center space-x-2"><span class="accent-text text-xl">&rarr;</span>
+          PostgreSQL / Firestore / MongoDB
+        </li>
+        <li class="flex items-center space-x-2"><span class="accent-text text-xl">&rarr;</span>
+          Docker / Kubernetes
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
