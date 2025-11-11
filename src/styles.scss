@@ -172,7 +172,7 @@ body.light .hero-name {
     var(--accent-light) 100%
   );
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  // -webkit-text-fill-color: transparent; // Due to this label became invisible
   background-clip: text;
 }
 
