@@ -16,6 +16,7 @@ import { AboutComponent } from './about/about.component';
 import { SkillsComponent } from './skills/skills.component';
 import { ExperienceComponent } from './experience/experience.component';
 import { ContactComponent } from './contact/contact.component';
+import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ import { ContactComponent } from './contact/contact.component';
     SkillsComponent,
     ExperienceComponent,
     ContactComponent,
+    CustomCursorComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

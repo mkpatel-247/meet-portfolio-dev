@@ -7,7 +7,7 @@ import {
   PLATFORM_ID,
   HostListener,
 } from '@angular/core';
-import { ThemeService } from '../../../shared/services/theme.service';
+import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
   selector: 'app-navbar',
