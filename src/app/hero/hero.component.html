@@ -1,98 +1,107 @@
-<section id="hero" class="min-h-screen flex items-center justify-between pb-12 relative overflow-hidden">
+<section id="hero" class="hero-section">
   <!-- Animated background elements -->
-  <div class="absolute inset-0 -z-10">
-    <div
-      class="absolute top-20 right-20 w-72 h-72 bg-gradient-to-r from-orange-500/10 to-orange-600/10 rounded-full blur-3xl floating">
-    </div>
-    <div
-      class="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-r from-orange-400/5 to-orange-500/5 rounded-full blur-3xl floating"
-      style="animation-delay: -3s;"></div>
+  <div class="hero-background">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="grid-pattern"></div>
   </div>
 
-  <!-- Left Content -->
-  <div class="space-y-6 max-w-5xl fade-in visible flex-1">
-    <p class="text-lg sm:text-xl font-mono accent-text hero-text-reveal" data-aos="fade-up" data-aos-delay="100">Hi,
-      I'm Meet</p>
-    <h1 class="text-6xl sm:text-7xl md:text-8xl font-extrabold leading-none tracking-tight hero-text-reveal"
-      data-aos="fade-up" data-aos-delay="200">
-      <span class="hero-name">Full-Stack</span>
-      <br>
-      <span class="floating" style="animation-delay: -1s;">Engineer</span>
-    </h1>
-    <p class="text-xl sm:text-2xl font-light text-gray-300 text-muted max-w-3xl pt-4 hero-text-reveal"
-      data-aos="fade-up" data-aos-delay="300">
-      I architect and build scalable web platforms, specializing in modern JavaScript frameworks (Angular, Node,
-      Express, and Nest) and robust cloud infrastructure (AWS/Serverless).
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 mt-8 hero-text-reveal" data-aos="fade-up" data-aos-delay="400">
-      <a href="#work"
-        class="inline-block py-3 px-8 text-base font-semibold border-2 rounded-lg accent-button hover:scale-105 transition-transform duration-300">
-        View My Experience &rarr;
-      </a>
-      <a href="#contact"
-        class="inline-block py-3 px-8 text-base font-semibold border-2 border-gray-600 hover:border-accent-color rounded-lg transition-all duration-300 hover:text-accent-color hover:scale-105">
-        Get In Touch
-      </a>
+  <div class="hero-container">
+    <!-- Left Content - Refined Layout -->
+    <div class="hero-content">
+      <div class="hero-greeting" data-aos="fade-up" data-aos-delay="100">
+        <span class="greeting-text">Hi, my name is</span>
+      </div>
+
+      <h1 class="hero-name" data-aos="fade-up" data-aos-delay="200">
+        <span class="name-text">Meet <span class="name-part">Patel</span><span class="orange-dot">.</span></span>
+      </h1>
+
+      <p class="hero-description" data-aos="fade-up" data-aos-delay="300">
+        Software Engineer passionate about building scalable applications and robust architecture.
+      </p>
+
+      <div class="hero-expertise" data-aos="fade-up" data-aos-delay="350">
+        <span class="expertise-label">I deep dive into:</span>
+        <div class="expertise-tags">
+          <span class="expertise-tag">Web APIs</span>
+          <span class="expertise-tag">UI/UX</span>
+          <span class="expertise-tag">Integrations</span>
+          <span class="expertise-tag">AI / ML</span>
+          <span class="expertise-tag">FinTech</span>
+          <span class="expertise-tag">MedTech</span>
+        </div>
+      </div>
+
+      <div class="hero-cta" data-aos="fade-up" data-aos-delay="400">
+        <a href="#work" class="cta-button primary interactive" (mouseenter)="onHover('button')"
+          (mouseleave)="onLeave()">
+          <span>View My Work</span>
+          <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+        <a href="#contact" class="cta-button secondary interactive" (mouseenter)="onHover('button')"
+          (mouseleave)="onLeave()">
+          Get In Touch
+        </a>
+      </div>
+
+      <!-- Social Links / Tech Stack Preview -->
+      <div class="hero-meta" data-aos="fade-up" data-aos-delay="500">
+        <div class="tech-preview">
+          <span class="meta-label">Tech Stack:</span>
+          <div class="tech-icons">
+            <div class="tech-icon interactive" (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
+              <img src="https://skillicons.dev/icons?i=angular" alt="Angular" />
+            </div>
+            <div class="tech-icon interactive" (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
+              <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" />
+            </div>
+            <div class="tech-icon interactive" (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
+              <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" />
+            </div>
+            <div class="tech-icon interactive" (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
+              <img src="https://skillicons.dev/icons?i=aws" alt="AWS" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Content - Avatar (Desktop) -->
+    <div class="hero-visual" data-aos="fade-left" data-aos-delay="600">
+      <div class="avatar-container interactive" (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
+        <div class="avatar-glow"></div>
+        <div class="avatar-wrapper">
+          <img src="assets/images/hero-avater.png" alt="Meet Patel - Software Engineer" class="avatar-image" />
+          <div class="avatar-overlay"></div>
+        </div>
+
+        <!-- Floating Tech Icons -->
+        <div class="floating-icon icon-1">
+          <img src="https://skillicons.dev/icons?i=angular" alt="Angular" />
+        </div>
+        <div class="floating-icon icon-2">
+          <img src="https://skillicons.dev/icons?i=docker" alt="Docker" />
+        </div>
+        <div class="floating-icon icon-3">
+          <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" />
+        </div>
+        <div class="floating-icon icon-4">
+          <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" />
+        </div>
+        <div class="floating-icon icon-5">
+          <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" />
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Right Content - Avatar (Desktop) -->
-  <div class="hidden lg:flex justify-center items-center flex-1" data-aos="fade-left" data-aos-delay="500">
-    <div class="relative">
-      <!-- Avatar Container with Glow Effect -->
-      <div
-        class="relative w-80 h-80 rounded-full overflow-hidden border-4 border-accent-color shadow-2xl hero-avatar avatar-pulse">
-        <img src="assets/images/hero-avater.png" alt="Meet Patel - Software Engineer"
-          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-        <!-- Gradient Overlay for Better Integration -->
-        <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20"></div>
-      </div>
-
-      <!-- Floating Tech Icons Around Avatar -->
-      <div class="absolute -top-4 -right-4 w-8 h-8 bg-accent-color rounded-full opacity-80 floating-tech-icon"
-        style="animation-delay: -2s;">
-        <img src="https://skillicons.dev/icons?i=angular" alt="Angular" class="w-6 h-6" />
-      </div>
-      <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-accent-color rounded-full opacity-60 floating-tech-icon"
-        style="animation-delay: -4s;">
-        <img src="https://skillicons.dev/icons?i=react" alt="React" class="w-4 h-4" />
-      </div>
-      <div class="absolute top-1/2 -right-8 w-4 h-4 bg-accent-color rounded-full opacity-70 floating-tech-icon"
-        style="animation-delay: -1s;">
-        <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" class="w-3 h-3" />
-      </div>
-      <div class="absolute top-1/4 -left-8 w-5 h-5 bg-accent-color rounded-full opacity-70 floating-tech-icon"
-        style="animation-delay: -3s;">
-        <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" class="w-3 h-3" />
-      </div>
-      <div class="absolute bottom-1/4 -right-12 w-4 h-4 bg-accent-color rounded-full opacity-60 floating-tech-icon"
-        style="animation-delay: -5s;">
-        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" class="w-3 h-3" />
-      </div>
-
-      <!-- Decorative Ring -->
-      <div class="absolute inset-0 rounded-full border-2 border-accent-color/30 scale-110 animate-pulse"></div>
-    </div>
-  </div>
-
-  <!-- Mobile Avatar -->
-  <div class="lg:hidden hero-avatar-mobile" data-aos="fade-up" data-aos-delay="300">
-    <div class="relative">
-      <div class="relative rounded-full overflow-hidden border-4 border-accent-color shadow-2xl hero-avatar">
-        <img src="assets/images/hero-avater.png" alt="Meet Patel - Software Engineer"
-          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-        <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20"></div>
-      </div>
-
-      <!-- Floating Elements for Mobile -->
-      <div class="absolute -top-2 -right-2 w-4 h-4 bg-accent-color rounded-full opacity-80 floating"
-        style="animation-delay: -2s;">
-        <img src="https://skillicons.dev/icons?i=angular" alt="Angular" />
-      </div>
-      <div class="absolute -bottom-2 -left-2 w-3 h-3 bg-accent-color rounded-full opacity-60 floating"
-        style="animation-delay: -4s;">
-        <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" />
-      </div>
-    </div>
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="700">
+    <span class="scroll-text">SCROLL</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
