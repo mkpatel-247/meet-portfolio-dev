@@ -848,3 +848,25 @@ body.light .tech-tooltip::before {
     height: 25px;
   }
 }
+
+/* Custom Cursor Global Styles */
+/* Only apply when custom cursor is active (desktop with fine pointer) */
+@media (pointer: fine) {
+  body.custom-cursor-active {
+    cursor: none !important;
+  }
+
+  body.custom-cursor-active a.interactive,
+  body.custom-cursor-active button.interactive,
+  body.custom-cursor-active [role="button"].interactive,
+  body.custom-cursor-active .interactive {
+    cursor: none !important;
+  }
+
+  /* Show default cursor for text selection */
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active [contenteditable] {
+    cursor: text !important;
+  }
+}
