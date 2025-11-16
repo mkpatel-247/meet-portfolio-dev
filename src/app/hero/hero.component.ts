@@ -2,6 +2,12 @@ import { Component, OnInit, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../shared/services/cursor.service';
 
+interface IFloatIcons {
+  name: string;
+  class: string;
+  icon: string;
+}
+
 @Component({
   selector: 'app-hero',
   standalone: true,
@@ -12,6 +18,7 @@ import { CursorService } from '../shared/services/cursor.service';
 export class HeroComponent implements OnInit {
   isBrowser: boolean;
   private cursorService = inject(CursorService, { optional: true });
+  floatingIconsDetails: IFloatIcons[] | undefined;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -19,6 +26,7 @@ export class HeroComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialize any animations or effects here
+    this.floatingIcons();
   }
 
   onHover(type: 'link' | 'button' | 'image' | 'text'): void {
@@ -35,5 +43,35 @@ export class HeroComponent implements OnInit {
     if (this.isBrowser && this.cursorService) {
       this.cursorService.reset();
     }
+  }
+
+  floatingIcons() {
+    this.floatingIconsDetails = [
+      {
+        class: 'top-[8%] right-[-8%]',
+        name: 'Angular',
+        icon: 'angular',
+      },
+      {
+        class: 'top-1/2 right-[-12%] [animation-delay:-1.5s]',
+        name: 'Docker',
+        icon: 'docker',
+      },
+      {
+        class: 'bottom-[18%] right-[-8%] [animation-delay:-3s]',
+        name: 'Node.js',
+        icon: 'nodejs',
+      },
+      {
+        class: 'top-[18%] left-[-8%] [animation-delay:-4.5s] ',
+        name: 'MongoDB',
+        icon: 'mongodb',
+      },
+      {
+        class: 'bottom-[8%] left-[-12%] [animation-delay:-6s]',
+        name: 'TypeScript',
+        icon: 'ts',
+      },
+    ];
   }
 }

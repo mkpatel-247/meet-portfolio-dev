@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isMobileMenuOpen = false;
   isScrolled = false;
   private scrollListener?: () => void;
+  navbarRoute: any[] = [];
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
@@ -36,6 +37,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.systemTheme = this.themeService.isDarkTheme() ? 'dark' : 'light';
       this.setupScrollListener();
     }
+    this.preparedNavbarRoute();
   }
 
   ngOnDestroy(): void {
@@ -170,5 +172,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     // Close if clicking on backdrop (mobileMenu but not content) or outside entirely
     this.closeMobileMenu();
+  }
+
+  private preparedNavbarRoute() {
+    this.navbarRoute = [
+      {
+        label: 'About',
+        route: '#about',
+      },
+      {
+        label: 'Skills',
+        route: '#skills',
+      },
+      {
+        label: 'Work',
+        route: '#work',
+      },
+      {
+        label: 'Contact',
+        route: '#contact',
+      },
+    ];
   }
 }
