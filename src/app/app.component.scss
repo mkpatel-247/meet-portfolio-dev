@@ -7,38 +7,58 @@
   .gradient-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(100px);
     opacity: 0.6;
     animation: float 20s ease-in-out infinite;
 
     &.orb-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255, 140, 0, 0.3), transparent);
-      top: -200px;
-      left: -200px;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(
+        circle,
+        rgba(255, 140, 0, 0.4) 0%,
+        rgba(255, 140, 0, 0.25) 20%,
+        rgba(255, 140, 0, 0.15) 40%,
+        rgba(255, 140, 0, 0.08) 60%,
+        rgba(255, 140, 0, 0.04) 80%,
+        transparent 100%
+      );
+      top: -300px;
+      left: -400px;
       animation-delay: 0s;
     }
 
     &.orb-2 {
-      width: 400px;
-      height: 400px;
+      width: 700px;
+      height: 700px;
       background: radial-gradient(
         circle,
-        rgba(255, 107, 53, 0.25),
-        transparent
+        rgba(255, 107, 53, 0.3) 0%,
+        rgba(255, 107, 53, 0.18) 20%,
+        rgba(255, 107, 53, 0.12) 40%,
+        rgba(255, 107, 53, 0.06) 60%,
+        rgba(255, 107, 53, 0.03) 80%,
+        transparent 100%
       );
-      bottom: -150px;
-      right: -150px;
+      bottom: -250px;
+      right: -350px;
       animation-delay: -7s;
     }
 
     &.orb-3 {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(255, 180, 77, 0.2), transparent);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(
+        circle,
+        rgba(255, 180, 77, 0.25) 0%,
+        rgba(255, 180, 77, 0.15) 20%,
+        rgba(255, 180, 77, 0.1) 40%,
+        rgba(255, 180, 77, 0.05) 60%,
+        rgba(255, 180, 77, 0.025) 80%,
+        transparent 100%
+      );
       top: 50%;
-      right: 10%;
+      right: -200px;
       animation-delay: -14s;
     }
   }
@@ -56,30 +76,64 @@
   }
 }
 
+// Hero wrapper to break out of main container padding
+.hero-wrapper {
+  margin-left: calc(-1 * 1rem);
+  margin-right: calc(-1 * 1rem);
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @media (min-width: 640px) {
+    margin-left: calc(-1 * 1.5rem);
+    margin-right: calc(-1 * 1.5rem);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    margin-left: calc(-1 * 2rem);
+    margin-right: calc(-1 * 2rem);
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 :host-context(body.light) {
   .hero-background {
     .gradient-orb {
       &.orb-1 {
         background: radial-gradient(
           circle,
-          rgba(255, 140, 0, 0.12),
-          transparent
+          rgba(255, 140, 0, 0.18) 0%,
+          rgba(255, 140, 0, 0.12) 20%,
+          rgba(255, 140, 0, 0.08) 40%,
+          rgba(255, 140, 0, 0.04) 60%,
+          rgba(255, 140, 0, 0.02) 80%,
+          transparent 100%
         );
       }
 
       &.orb-2 {
         background: radial-gradient(
           circle,
-          rgba(255, 107, 53, 0.1),
-          transparent
+          rgba(255, 107, 53, 0.15) 0%,
+          rgba(255, 107, 53, 0.1) 20%,
+          rgba(255, 107, 53, 0.06) 40%,
+          rgba(255, 107, 53, 0.03) 60%,
+          rgba(255, 107, 53, 0.015) 80%,
+          transparent 100%
         );
       }
 
       &.orb-3 {
         background: radial-gradient(
           circle,
-          rgba(255, 180, 77, 0.08),
-          transparent
+          rgba(255, 180, 77, 0.12) 0%,
+          rgba(255, 180, 77, 0.08) 20%,
+          rgba(255, 180, 77, 0.05) 40%,
+          rgba(255, 180, 77, 0.025) 60%,
+          rgba(255, 180, 77, 0.012) 80%,
+          transparent 100%
         );
       }
     }
