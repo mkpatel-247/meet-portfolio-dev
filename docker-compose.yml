@@ -1,0 +1,11 @@
+version: "1.0"
+services:
+  portfolio:
+    image: meetpatelhost/portfolio:latest
+    container_name: portfolio
+    restart: always
+    ports:
+      - "80:4200"
+    environment:
+      - NODE_ENV=production
+    # If you need volumes for logs or certs, define them here

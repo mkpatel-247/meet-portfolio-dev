@@ -8,7 +8,7 @@
   <div class="tech-grid" data-aos="fade-up" data-aos-delay="200">
     <!-- HTML -->
     @for (item of skillsData; track $index) {
-    <div class="tech-icon">
+    <div class="tech-icon interactive" appCursorHover="image" [hoverScale]="1.4">
       <img src="https://skillicons.dev/icons?i={{item.value}}" alt="{{item.label}}" />
       <div class="tech-tooltip">{{item.label}}</div>
     </div>

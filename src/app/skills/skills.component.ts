@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CursorHoverDirective } from '../../app/shared/directives/cursor-hover.directive';
 
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CursorHoverDirective],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
 })

@@ -6,18 +6,21 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 export class ThemeService {
   private renderer: Renderer2;
   private darkThemeClass = 'dark';
+  private lightThemeClass = 'light';
 
   constructor(rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
   enableDarkTheme(): void {
+    this.renderer.removeClass(document.body, this.lightThemeClass);
     this.renderer.addClass(document.body, this.darkThemeClass);
     localStorage.setItem('theme', 'dark');
   }
 
   enableLightTheme(): void {
     this.renderer.removeClass(document.body, this.darkThemeClass);
+    this.renderer.addClass(document.body, this.lightThemeClass);
     localStorage.setItem('theme', 'light');
   }
 

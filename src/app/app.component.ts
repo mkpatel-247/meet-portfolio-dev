@@ -14,6 +14,9 @@ import { isPlatformBrowser } from '@angular/common';
 import Aos, * as AOS from 'aos';
 import { AboutComponent } from './about/about.component';
 import { SkillsComponent } from './skills/skills.component';
+import { ExperienceComponent } from './experience/experience.component';
+import { ContactComponent } from './contact/contact.component';
+import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +28,9 @@ import { SkillsComponent } from './skills/skills.component';
     HeroComponent,
     AboutComponent,
     SkillsComponent,
+    ExperienceComponent,
+    ContactComponent,
+    CustomCursorComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

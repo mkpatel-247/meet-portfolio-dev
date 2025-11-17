@@ -1,0 +1,109 @@
+// Navbar component - Minimal custom CSS for pseudo-element animations and theme overrides
+// All base styles are handled by Tailwind utility classes in the template
+
+// Nav link underline animation
+.nav-link-underline {
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ff8c00, #ffb84d);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}
+
+// Mobile menu link shimmer effect
+.mobile-menu-link-shimmer {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 140, 0, 0.3),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Light theme adjustments
+:host-context(body.light) {
+  // Navbar container
+  header > div {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(218, 208, 208, 0.15);
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.08) inset;
+
+    &:hover {
+      box-shadow: 0 6px 32px 0 rgba(200, 186, 186, 0.18),
+        0 0 0 1px rgba(0, 0, 0, 0.12) inset;
+      border-color: rgba(255, 140, 0, 0.5);
+    }
+  }
+
+  // Nav links
+  .nav-link-underline {
+    color: rgba(0, 0, 0, 0.75);
+  }
+
+  // Theme toggle and mobile menu button
+  button[aria-label*="Toggle"] {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  // Mobile menu
+  #mobile-menu {
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  // Mobile menu links
+  .mobile-menu-link-shimmer {
+    color: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media (max-width: 640px) {
+  header > div {
+    padding: 0.5rem 0.875rem;
+  }
+
+  a img {
+    height: 1.75rem;
+  }
+
+  .mobile-menu-link-shimmer {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    min-width: 180px;
+    max-width: 240px;
+  }
+
+  #mobile-menu > div {
+    padding: 5rem 1.5rem 2.5rem;
+    gap: 1.25rem;
+    max-width: 100%;
+  }
+}
