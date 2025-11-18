@@ -30,7 +30,9 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              }, 
+              "src/assets/images/favicon_mp.ico",
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss",
