@@ -44,17 +44,21 @@ export class AppComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        Aos.init({ once: true });
-        this.cdr.markForCheck();
-      }, 3000);
-    }
+    // AOS initialization moved to ngAfterViewInit to avoid duplicate initialization
   }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      AOS.init({ once: true, duration: 1000 });
+      // Initialize AOS immediately after view init for faster loading
+      requestAnimationFrame(() => {
+        AOS.init({ 
+          once: true, 
+          duration: 800,
+          offset: 50,
+          delay: 0
+        });
+        this.cdr.markForCheck();
+      });
     }
   }
 }

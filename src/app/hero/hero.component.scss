@@ -1,2 +1,21 @@
 // Hero component - All styles are handled by Tailwind utility classes
 // This file is kept minimal for any future theme-specific overrides if needed
+
+// Fix for View My Work button shadow - ensure parent container allows overflow
+.hero-cta-container {
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+
+// Ensure button shadow is not clipped
+a[href="#work"] {
+  position: relative;
+  z-index: 1;
+  will-change: transform, box-shadow;
+  
+  // Ensure shadow is visible on hover
+  &:hover {
+    z-index: 2;
+  }
+}

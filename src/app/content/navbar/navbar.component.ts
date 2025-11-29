@@ -32,12 +32,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.isBrowser) {
-      this.themeService.initTheme();
-      this.systemTheme = this.themeService.isDarkTheme() ? 'dark' : 'light';
-      this.setupScrollListener();
-    }
+    // Initialize routes immediately (no browser check needed)
     this.preparedNavbarRoute();
+
+    if (this.isBrowser) {
+      // Use requestAnimationFrame for smoother initialization
+      requestAnimationFrame(() => {
+        this.themeService.initTheme();
+        this.systemTheme = this.themeService.isDarkTheme() ? 'dark' : 'light';
+        this.setupScrollListener();
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -55,10 +60,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   setupScrollListener(): void {
     if (this.isBrowser) {
+      let ticking = false;
       this.scrollListener = () => {
-        this.isScrolled = window.scrollY > 50;
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            this.isScrolled = window.scrollY > 50;
+            ticking = false;
+          });
+          ticking = true;
+        }
       };
-      window.addEventListener('scroll', this.scrollListener);
+      window.addEventListener('scroll', this.scrollListener, { passive: true });
     }
   }
 

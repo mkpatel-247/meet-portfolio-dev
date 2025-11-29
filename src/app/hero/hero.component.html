@@ -64,10 +64,10 @@
       </div>
 
       <!-- CTA Buttons -->
-      <div class="mt-4 flex flex-wrap gap-3 sm:gap-4 md:mt-5 md:gap-5 lg:mt-6 lg:gap-6" data-aos="fade-up"
-        data-aos-delay="400">
+      <div class="hero-cta-container mt-4 flex flex-wrap gap-3 sm:gap-4 md:mt-5 md:gap-5 lg:mt-6 lg:gap-6"
+        data-aos="fade-up" data-aos-delay="400">
         <a href="#work"
-          class="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-transparent bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(255,140,0,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 sm:w-auto sm:justify-start sm:px-5 sm:py-3 sm:text-[0.95rem] md:px-7 md:py-3.5 md:text-base lg:px-8 lg:py-4 interactive"
+          class="group relative inline-flex w-full items-center justify-center gap-2 overflow-visible rounded-lg border-2 border-transparent bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(255,140,0,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 sm:w-auto sm:justify-start sm:px-5 sm:py-3 sm:text-[0.95rem] md:px-7 md:py-3.5 md:text-base lg:px-8 lg:py-4 interactive"
           (mouseenter)="onHover('button')" (mouseleave)="onLeave()">
           <span class="relative z-10">View My Work</span>
           <svg class="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5"
@@ -92,25 +92,25 @@
               class="flex h-8 w-8 cursor-none items-center justify-center rounded-md border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] lg:h-8 lg:w-8 interactive"
               (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
               <img class="h-5 w-5 brightness-90 transition-all duration-300 hover:brightness-110"
-                src="https://skillicons.dev/icons?i=angular" alt="Angular" />
+                src="https://skillicons.dev/icons?i=angular" alt="Angular" loading="lazy" />
             </div>
             <div
               class="flex h-8 w-8 cursor-none items-center justify-center rounded-md border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] lg:h-8 lg:w-8 interactive"
               (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
               <img class="h-5 w-5 brightness-90 transition-all duration-300 hover:brightness-110"
-                src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" />
+                src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" loading="lazy" />
             </div>
             <div
               class="flex h-8 w-8 cursor-none items-center justify-center rounded-md border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] lg:h-8 lg:w-8 interactive"
               (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
               <img class="h-5 w-5 brightness-90 transition-all duration-300 hover:brightness-110"
-                src="https://skillicons.dev/icons?i=ts" alt="TypeScript" />
+                src="https://skillicons.dev/icons?i=ts" alt="TypeScript" loading="lazy" />
             </div>
             <div
               class="flex h-8 w-8 cursor-none items-center justify-center rounded-md border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] lg:h-8 lg:w-8 interactive"
               (mouseenter)="onHover('image')" (mouseleave)="onLeave()">
               <img class="h-5 w-5 brightness-90 transition-all duration-300 hover:brightness-110"
-                src="https://skillicons.dev/icons?i=aws" alt="AWS" />
+                src="https://skillicons.dev/icons?i=aws" alt="AWS" loading="lazy" />
             </div>
           </div>
         </div>
@@ -131,7 +131,8 @@
         <div
           class="relative h-full w-full overflow-hidden rounded-full border-[3px] border-orange-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-[400ms] hover:scale-[1.02] hover:border-orange-500 hover:shadow-[0_30px_80px_rgba(255,140,0,0.4)]">
           <img src="assets/images/hero-avater.png" alt="Meet Patel - Software Engineer"
-            class="h-full w-full object-cover transition-transform duration-[600ms] group-hover:scale-110" />
+            class="h-full w-full object-cover transition-transform duration-[600ms] group-hover:scale-110"
+            loading="eager" fetchpriority="high" />
           <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent to-orange-500/10">
           </div>
         </div>
@@ -140,27 +141,27 @@
         <div
           class="absolute top-[8%] right-[-8%] flex h-8 w-8 animate-float-icon items-center justify-center rounded-md border-2 dark:border-orange-500/30 dark:bg-black/60 backdrop-blur-md transition-transform duration-500 hover:scale-125 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.4)] lg:h-9 lg:w-9">
           <img class="h-[18px] w-[18px] brightness-110 lg:h-5 lg:w-5" src="https://skillicons.dev/icons?i=angular"
-            alt="Angular" />
+            alt="Angular" loading="lazy" />
         </div>
         <div
           class="absolute top-1/2 right-[-12%] flex h-8 w-8 animate-float-icon items-center justify-center rounded-md border-2 border-orange-500/30 bg-black/60 backdrop-blur-md transition-transform duration-500 hover:scale-125 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.4)] [animation-delay:-1.5s] lg:h-9 lg:w-9">
           <img class="h-[18px] w-[18px] brightness-110 lg:h-5 lg:w-5" src="https://skillicons.dev/icons?i=docker"
-            alt="Docker" />
+            alt="Docker" loading="lazy" />
         </div>
         <div
           class="absolute bottom-[18%] right-[-8%] flex h-8 w-8 animate-float-icon items-center justify-center rounded-md border-2 border-orange-500/30 bg-black/60 backdrop-blur-md transition-transform duration-500 hover:scale-125 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.4)] [animation-delay:-3s] lg:h-9 lg:w-9">
           <img class="h-[18px] w-[18px] brightness-110 lg:h-5 lg:w-5" src="https://skillicons.dev/icons?i=nodejs"
-            alt="Node.js" />
+            alt="Node.js" loading="lazy" />
         </div>
         <div
           class="absolute top-[18%] left-[-8%] flex h-8 w-8 animate-float-icon items-center justify-center rounded-md border-2 border-orange-500/30 bg-black/60 backdrop-blur-md transition-transform duration-500 hover:scale-125 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.4)] [animation-delay:-4.5s] lg:h-9 lg:w-9">
           <img class="h-[18px] w-[18px] brightness-110 lg:h-5 lg:w-5" src="https://skillicons.dev/icons?i=mongodb"
-            alt="MongoDB" />
+            alt="MongoDB" loading="lazy" />
         </div>
         <div
           class="absolute bottom-[8%] left-[-12%] flex h-8 w-8 animate-float-icon items-center justify-center rounded-md border-2 border-orange-500/30 bg-black/60 backdrop-blur-md transition-transform duration-500 hover:scale-125 hover:border-orange-500 hover:bg-orange-500/20 hover:shadow-[0_8px_20px_rgba(255,140,0,0.4)] [animation-delay:-6s] lg:h-9 lg:w-9">
           <img class="h-[18px] w-[18px] brightness-110 lg:h-5 lg:w-5" src="https://skillicons.dev/icons?i=ts"
-            alt="TypeScript" />
+            alt="TypeScript" loading="lazy" />
         </div>
       </div>
     </div>
