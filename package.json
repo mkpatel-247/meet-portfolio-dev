@@ -7,7 +7,7 @@
     "build": "npm run build:ssr",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:ssr": "npm run build:ssr --configuration production && ng run meet-portfolio:server:production",
+    "build:ssr": "npm run build && npm run build:server",
     "serve:ssr": "node dist/meet-portfolio/server/main.mjs"
   },
   "private": true,
