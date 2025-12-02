@@ -6,7 +6,9 @@
     "outDir": "./out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "target": "ES2022",
+    "module": "ESNext",
   },
   "files": [
     "src/main.ts",
