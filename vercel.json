@@ -1,9 +1,11 @@
 {
-  "builds": [
-    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist/meet-portfolio/browser" } },
-    { "src": "api/index.js", "use": "@vercel/node" }
+  "version": 2,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api" }
   ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/api/index.js" }
-  ]
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "dist/meet-portfolio/browser/**"
+    }
+  }
 }

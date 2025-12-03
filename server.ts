@@ -98,6 +98,4 @@ function run(): void {
   });
 }
 
-if (process.env['NODE_ENV'] !== 'test') {
-  run();
-}
+run();

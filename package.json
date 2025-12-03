@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run build:ssr",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:ssr": "npm run build && npm run build:server",
+    "dev:ssr": "ng run meet-portfolio:serve-ssr",
+    "build:ssr": "ng build && ng run meet-portfolio:server",
     "serve:ssr": "node dist/meet-portfolio/server/main.mjs"
   },
   "private": true,
