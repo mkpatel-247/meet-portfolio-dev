@@ -4,9 +4,17 @@
     {
       "src": "dist/meet-portfolio/server/server.mjs",
       "use": "@vercel/node"
+    },
+    {
+      "src": "dist/meet-portfolio/browser/**/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/(.*\\..*)",
+      "dest": "dist/meet-portfolio/browser/"
+    },
     {
       "src": "/(.*)",
       "dest": "dist/meet-portfolio/server/server.mjs"
