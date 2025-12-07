@@ -13,7 +13,7 @@
   "routes": [
     {
       "src": "/(.*\\..*)",
-      "dest": "dist/meet-portfolio/browser/"
+      "dest": "dist/meet-portfolio/browser/$1"
     },
     {
       "src": "/(.*)",
