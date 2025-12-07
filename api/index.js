@@ -1,10 +1,10 @@
 // api/index.js
-const path = require("path");
+import { join } from "path";
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     // absolute file:// URL to the built ESM server bundle
-    const serverPath = path.join(process.cwd(), "dist/meet-portfolio/");
+    const serverPath = join(process.cwd(), "dist/meet-portfolio");
     const serverModule = await import("file://" + serverPath);
 
     // Angular Universal server exports vary by build. Try common exports:
