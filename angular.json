@@ -30,7 +30,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }, 
+              },
               "src/assets/images/favicon_mp.ico",
               "src/assets"
             ],
@@ -80,6 +80,21 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/meet-portfolio/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.json"
+          }
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "meet-portfolio:build",
+            "serverTarget": "meet-portfolio:server"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
