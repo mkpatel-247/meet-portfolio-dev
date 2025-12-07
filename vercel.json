@@ -1,24 +1,13 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
+  "framework": "angular",
   "buildCommand": "npm run build",
-  "builds": [
+  "outputDirectory": "dist/meet-portfolio/browser",
+  "rewrites": [
     {
-      "src": "dist/meet-portfolio/server/server.mjs",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "dist/meet-portfolio/browser/**/*",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*\\..*)",
-      "dest": "dist/meet-portfolio/browser/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "dist/meet-portfolio/server/server.mjs"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
