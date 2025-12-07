@@ -1,11 +1,15 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api" }
-  ],
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "dist/meet-portfolio/browser/**"
+  "builds": [
+    {
+      "src": "dist/meet-portfolio/server/main.mjs",
+      "use": "@vercel/node"
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/meet-portfolio/server/main.mjs"
+    }
+  ]
 }
