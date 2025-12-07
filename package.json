@@ -9,7 +9,7 @@
     "test": "ng test",
     "dev:ssr": "ng run meet-portfolio:serve-ssr",
     "build:ssr": "ng build && ng run meet-portfolio:server",
-    "serve:ssr": "node dist/meet-portfolio/server/main.mjs"
+    "serve:ssr": "node dist/meet-portfolio/server/server.mjs"
   },
   "private": true,
   "dependencies": {
