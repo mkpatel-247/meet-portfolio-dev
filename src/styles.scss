@@ -36,6 +36,31 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1.6;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  position: relative;
+  
+  /* Global Background Pattern - Light Square Boxes */
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+  }
+}
+
+body.light::before {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  opacity: 0.5;
 }
 
 /* Custom scrollbar with better styling */
@@ -53,6 +78,20 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
+}
+
+/* Light theme scrollbar */
+body.light ::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+body.light ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-color), var(--accent-hover));
+  border-radius: 3px;
+}
+
+body.light ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-hover);
 }
 
