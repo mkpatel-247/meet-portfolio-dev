@@ -1,5 +1,12 @@
-import { Injectable, NgZone } from '@angular/core';
+import {
+  Injectable,
+  NgZone,
+  inject,
+  PLATFORM_ID,
+  DestroyRef,
+} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface CursorState {
   x: number;
@@ -13,15 +20,19 @@ export interface CursorState {
   providedIn: 'root',
 })
 export class CursorService {
-  private cursorState$ = new BehaviorSubject<CursorState>({
+  private readonly ngZone = inject(NgZone);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly cursorState$ = new BehaviorSubject<CursorState>({
     x: 0,
     y: 0,
     isHovering: false,
     scale: 1,
   });
 
-  public cursorState = this.cursorState$.asObservable();
-  
+  public readonly cursorState = this.cursorState$.asObservable();
+
   private rafId: number | null = null;
   private mouseX = 0;
   private mouseY = 0;
@@ -29,19 +40,27 @@ export class CursorService {
   private targetY = 0;
   private isInitialized = false;
 
-  constructor(private ngZone: NgZone) {
-    if (typeof window !== 'undefined') {
+  constructor() {
+    if (isPlatformBrowser(this.platformId)) {
       this.initMouseTracking();
+      // Cleanup on destroy
+      this.destroyRef.onDestroy(() => {
+        this.destroy();
+      });
     }
   }
 
   private initMouseTracking(): void {
-    if (this.isInitialized) return;
+    if (this.isInitialized || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
     this.isInitialized = true;
 
     // Use NgZone.runOutsideAngular to avoid triggering change detection
     this.ngZone.runOutsideAngular(() => {
-      document.addEventListener('mousemove', this.onMouseMove, { passive: true });
+      document.addEventListener('mousemove', this.onMouseMove, {
+        passive: true,
+      });
       this.animate();
     });
   }
@@ -57,11 +76,11 @@ export class CursorService {
     this.mouseY += (this.targetY - this.mouseY) * 0.15;
 
     const current = this.cursorState$.value;
-    
+
     // Only update if position changed significantly (reduces unnecessary emissions)
     const dx = Math.abs(current.x - this.mouseX);
     const dy = Math.abs(current.y - this.mouseY);
-    
+
     if (dx > 0.5 || dy > 0.5) {
       this.ngZone.run(() => {
         this.cursorState$.next({
@@ -86,7 +105,7 @@ export class CursorService {
     scale: number = 1.5
   ): void {
     const current = this.cursorState$.value;
-    
+
     // Only update if state actually changed
     if (
       current.isHovering !== isHovering ||
@@ -106,12 +125,12 @@ export class CursorService {
     this.setHover(false);
   }
 
-  destroy(): void {
+  private destroy(): void {
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
     }
-    if (typeof document !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       document.removeEventListener('mousemove', this.onMouseMove);
     }
     this.isInitialized = false;

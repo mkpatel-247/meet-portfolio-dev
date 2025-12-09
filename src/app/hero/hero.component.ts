@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../shared/services/cursor.service';
 
@@ -16,12 +16,14 @@ interface IFloatIcons {
   styleUrl: './hero.component.scss',
 })
 export class HeroComponent implements OnInit {
-  isBrowser: boolean;
-  private cursorService = inject(CursorService, { optional: true });
+  readonly isBrowser: boolean;
+  private readonly cursorService = inject(CursorService, { optional: true });
   floatingIconsDetails: IFloatIcons[] | undefined;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(platformId);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  constructor() {
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {
@@ -73,5 +75,27 @@ export class HeroComponent implements OnInit {
         icon: 'ts',
       },
     ];
+  }
+
+  scrollToNextSection(): void {
+    if (!this.isBrowser) return;
+    
+    const aboutSection = document.getElementById('about') || document.getElementById('skills');
+    if (aboutSection) {
+      const headerOffset = 100;
+      const elementPosition = aboutSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    } else {
+      // Fallback: scroll down by viewport height
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth',
+      });
+    }
   }
 }

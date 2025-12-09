@@ -1,17 +1,17 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Inject,
   PLATFORM_ID,
   NgZone,
+  inject,
+  DestroyRef,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../../../shared/services/cursor.service';
-import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-custom-cursor',
@@ -38,7 +38,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
   `,
   styleUrls: ['./custom-cursor.component.scss'],
 })
-export class CustomCursorComponent implements OnInit, OnDestroy {
+export class CustomCursorComponent implements OnInit {
   x = 0;
   y = 0;
   isHovering = false;
@@ -50,16 +50,15 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
     return `translate(-50%, -50%) scale(${this.scale})`;
   }
 
-  private subscription?: Subscription;
-  private isBrowser: boolean;
+  private readonly cursorService = inject(CursorService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly isBrowser: boolean;
 
-  constructor(
-    private cursorService: CursorService,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.isBrowser = isPlatformBrowser(platformId);
+  constructor() {
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {
@@ -80,7 +79,7 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
 
     // Subscribe with distinctUntilChanged to avoid unnecessary change detection
-    this.subscription = this.cursorService.cursorState
+    this.cursorService.cursorState
       .pipe(
         distinctUntilChanged((prev, curr) => {
           // Only trigger change detection if values actually changed
@@ -91,7 +90,8 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
             prev.hoverType === curr.hoverType &&
             Math.abs(prev.scale - curr.scale) < 0.01
           );
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((state) => {
         this.x = state.x;
@@ -101,15 +101,12 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
         this.scale = state.scale;
         this.cdr.markForCheck();
       });
-  }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    
-    if (this.isBrowser) {
-      document.body.classList.remove('custom-cursor-active');
-    }
+    // Cleanup on destroy
+    this.destroyRef.onDestroy(() => {
+      if (this.isBrowser) {
+        document.body.classList.remove('custom-cursor-active');
+      }
+    });
   }
 }

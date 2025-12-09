@@ -18,8 +18,15 @@ export class GitHubStatsService {
   /**
    * Fetch GitHub user statistics
    * @param username GitHub username
+   * @throws Error if username is invalid or API request fails
    */
   getGitHubStats(username: string): Observable<IGitHubStats> {
+    if (!username || username.trim() === '') {
+      return new Observable((observer) => {
+        observer.error(new Error('GitHub username is required'));
+      });
+    }
+
     return forkJoin({
       user: this.getUser(username),
       repos: this.getRepos(username),
@@ -35,7 +42,7 @@ export class GitHubStatsService {
         );
 
         // Calculate language statistics
-        const languages: { [key: string]: number } = {};
+        const languages: Record<string, number> = {};
         repos.forEach((repo) => {
           if (repo.language) {
             languages[repo.language] = (languages[repo.language] || 0) + 1;
@@ -58,19 +65,31 @@ export class GitHubStatsService {
       }),
       catchError((error) => {
         console.error('Error fetching GitHub stats:', error);
-        throw error;
+        const errorMessage =
+          error?.error?.message ||
+          error?.message ||
+          'Failed to fetch GitHub statistics';
+        throw new Error(errorMessage);
       })
     );
   }
 
   /**
    * Fetch GitHub user information
+   * @param username GitHub username
+   * @throws Error if user not found or API request fails
    */
   private getUser(username: string): Observable<IGitHubUser> {
     return this.http.get<IGitHubUser>(`${this.apiUrl}/users/${username}`).pipe(
       catchError((error) => {
         console.error('Error fetching GitHub user:', error);
-        throw error;
+        const errorMessage =
+          error?.status === 404
+            ? `User "${username}" not found`
+            : error?.error?.message ||
+              error?.message ||
+              'Failed to fetch user information';
+        throw new Error(errorMessage);
       })
     );
   }
@@ -95,7 +114,9 @@ export class GitHubStatsService {
    * Get contribution stats (requires GitHub token for private repos)
    * This is a placeholder - you can extend this with GitHub GraphQL API
    */
-  getContributionStats(username: string): Observable<any> {
+  getContributionStats(
+    username: string
+  ): Observable<{ totalContributions: number; streak: number }> {
     // Note: This would require GitHub GraphQL API or a proxy server
     // For now, we'll return basic stats
     return of({

@@ -7,11 +7,14 @@ module.exports = {
       keyframes: {
         'scroll-line': {
           '0%': {
-            transform: 'translateY(0)',
+            transform: 'translateY(-100%)',
+            opacity: '0',
+          },
+          '50%': {
             opacity: '1',
           },
           '100%': {
-            transform: 'translateY(100%)',
+            transform: 'translateY(200%)',
             opacity: '0',
           },
         },
@@ -47,7 +50,7 @@ module.exports = {
         },
       },
       animation: {
-        'scroll-line': 'scroll-line 2s ease-in-out infinite',
+        'scroll-line': 'scroll-line 1.5s ease-in-out infinite',
         'float-icon': 'float-icon 6s ease-in-out infinite',
         'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
         'slide-in-up': 'slide-in-up 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards',

@@ -1,9 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, PLATFORM_ID, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  PLATFORM_ID,
+  DestroyRef,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { GitHubStatsService } from '../shared/services/github-stats.service';
 import { CursorHoverDirective } from '../shared/directives/cursor-hover.directive';
 import { IGitHubStats } from '../shared/interface/github.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-github-stats',
@@ -13,16 +20,16 @@ import { IGitHubStats } from '../shared/interface/github.interface';
   styleUrl: './github-stats.component.scss',
 })
 export class GitHubStatsComponent implements OnInit {
-  private githubStatsService = inject(GitHubStatsService);
+  private readonly githubStatsService = inject(GitHubStatsService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
 
   // TODO: Replace with your GitHub username
-  githubUsername = 'mkpatel-247'; // Change this to your GitHub username
+  readonly githubUsername = 'mkpatel-247'; // Change this to your GitHub username
 
   stats: IGitHubStats | null = null;
   loading = true;
   error: string | null = null;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -31,7 +38,7 @@ export class GitHubStatsComponent implements OnInit {
   }
 
   loadGitHubStats(): void {
-    if (!this.githubUsername || this.githubUsername === 'your-username') {
+    if (!this.githubUsername || this.githubUsername.trim() === '') {
       this.error = 'Please set your GitHub username in the component';
       this.loading = false;
       return;
@@ -40,18 +47,21 @@ export class GitHubStatsComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.githubStatsService.getGitHubStats(this.githubUsername).subscribe({
-      next: (stats) => {
-        this.stats = stats;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Failed to load GitHub stats:', err);
-        this.error =
-          'Failed to load GitHub statistics. Please check your username and try again.';
-        this.loading = false;
-      },
-    });
+    this.githubStatsService
+      .getGitHubStats(this.githubUsername)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (stats) => {
+          this.stats = stats;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load GitHub stats:', err);
+          this.error =
+            'Failed to load GitHub statistics. Please check your username and try again.';
+          this.loading = false;
+        },
+      });
   }
 
   getTopLanguages(): Array<{ name: string; count: number }> {

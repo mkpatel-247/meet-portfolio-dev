@@ -1,17 +1,18 @@
 import {
   Component,
-  Inject,
   PLATFORM_ID,
   OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './content/navbar/navbar.component';
 import { FooterComponent } from './content/footer/footer.component';
 import { HeroComponent } from './hero/hero.component';
 import { isPlatformBrowser } from '@angular/common';
-import Aos, * as AOS from 'aos';
+import * as AOS from 'aos';
 import { AboutComponent } from './about/about.component';
 import { SkillsComponent } from './skills/skills.component';
 import { ExperienceComponent } from './experience/experience.component';
@@ -38,13 +39,11 @@ import { GitHubStatsComponent } from './github-stats/github-stats.component';
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  title = 'meet-portfolio';
+export class AppComponent implements OnInit, AfterViewInit {
+  readonly title = 'meet-portfolio';
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef
-  ) {}
   ngOnInit(): void {
     // AOS initialization moved to ngAfterViewInit to avoid duplicate initialization
   }
