@@ -17,6 +17,7 @@ import { SkillsComponent } from './skills/skills.component';
 import { ExperienceComponent } from './experience/experience.component';
 import { ContactComponent } from './contact/contact.component';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
+import { GitHubStatsComponent } from './github-stats/github-stats.component';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ import { CustomCursorComponent } from './shared/components/custom-cursor/custom-
     AboutComponent,
     SkillsComponent,
     ExperienceComponent,
+    GitHubStatsComponent,
     ContactComponent,
     CustomCursorComponent,
   ],
