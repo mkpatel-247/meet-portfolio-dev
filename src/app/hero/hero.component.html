@@ -168,12 +168,13 @@
   </div>
 
   <!-- Scroll Indicator -->
-  <div
-    class="absolute bottom-4 right-6 z-[3] flex flex-row items-center gap-3 opacity-60 transition-opacity duration-300 hover:opacity-100 md:bottom-6 md:right-8 lg:right-12"
-    data-aos="fade-up" data-aos-delay="700">
-    <span class="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-white md:text-[0.75rem]">SCROLL</span>
-    <div class="relative h-8 w-[2px] overflow-hidden rounded bg-white md:h-[35px]">
-      <span class="absolute inset-x-0 top-0 h-[40%] w-full animate-scroll-line bg-white"></span>
+  <a (click)="scrollToNextSection()" (mouseenter)="onHover('button')" (mouseleave)="onLeave()"
+    class="group absolute bottom-4 right-6 z-[3] flex flex-row items-center gap-3 opacity-60 transition-all duration-300 hover:opacity-100 hover:scale-110 active:scale-95 md:bottom-6 md:right-8 lg:right-12 cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2 py-1"
+    data-aos="fade-up" data-aos-delay="700" aria-label="Scroll to next section">
+    <span
+      class="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-white transition-colors duration-300 group-hover:text-orange-500 md:text-[0.75rem]">SCROLL</span>
+    <div class="relative h-8 w-[2px] overflow-hidden rounded-full bg-white/30 md:h-[35px]">
+      <span class="absolute inset-x-0 top-0 h-[50%] w-full animate-scroll-line bg-white rounded-full"></span>
     </div>
-  </div>
+  </a>
 </section>

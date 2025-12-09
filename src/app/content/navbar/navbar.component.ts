@@ -1,13 +1,19 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   Component,
-  Inject,
   OnInit,
   OnDestroy,
   PLATFORM_ID,
   HostListener,
+  inject,
+  DestroyRef,
 } from '@angular/core';
 import { ThemeService } from '../../shared/services/theme.service';
+
+interface NavbarRoute {
+  label: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-navbar',
@@ -18,17 +24,18 @@ import { ThemeService } from '../../shared/services/theme.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   systemTheme = 'light';
-  isBrowser: any;
+  readonly isBrowser: boolean;
   isMobileMenuOpen = false;
   isScrolled = false;
   private scrollListener?: () => void;
-  navbarRoute: any[] = [];
+  navbarRoute: NavbarRoute[] = [];
 
-  constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
-    private themeService: ThemeService
-  ) {
-    this.isBrowser = isPlatformBrowser(platformId);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly themeService = inject(ThemeService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {
