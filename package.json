@@ -10,9 +10,12 @@
     "test": "ng test",
     "dev:ssr": "ng run meet-portfolio:serve-ssr",
     "build:ssr": "ng build && ng run meet-portfolio:server",
-    "serve:ssr": "node dist/meet-portfolio/server/server.mjs",
+    "serve:ssr": "node dist/meet-portfolio/server/server.mjs"
   },
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "@angular/animations": "^18.2.0",
     "@angular/common": "^18.2.0",
