@@ -19,6 +19,7 @@ import { ExperienceComponent } from './experience/experience.component';
 import { ContactComponent } from './contact/contact.component';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
 import { GitHubStatsComponent } from './github-stats/github-stats.component';
+import { ChatComponent } from './chat/chat.component';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +35,7 @@ import { GitHubStatsComponent } from './github-stats/github-stats.component';
     GitHubStatsComponent,
     ContactComponent,
     CustomCursorComponent,
+    ChatComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

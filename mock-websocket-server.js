@@ -1,0 +1,181 @@
+/**
+ * Mock WebSocket Server for Chat Component Development
+ * 
+ * This is a standalone Node.js WebSocket server that simulates a chat backend.
+ * 
+ * Installation:
+ *   npm install ws
+ * 
+ * Usage:
+ *   node mock-websocket-server.js
+ * 
+ * The server will run on ws://localhost:8080
+ * 
+ * Configure your Angular app:
+ *   chatService.setConfig({
+ *     mode: 'websocket',
+ *     endpoint: 'ws://localhost:8080/chat'
+ *   });
+ */
+
+const WebSocket = require('ws');
+
+const PORT = process.env.PORT || 8080;
+const wss = new WebSocket.Server({ port: PORT });
+
+console.log(`Mock WebSocket server running on ws://localhost:${PORT}`);
+
+wss.on('connection', (ws, req) => {
+  console.log('Client connected');
+
+  // Extract sessionId from query string
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const sessionId = url.searchParams.get('sessionId') || 'default-session';
+  console.log(`Session ID: ${sessionId}`);
+
+  // Send welcome message
+  ws.send(JSON.stringify({
+    type: 'system',
+    message: {
+      id: `msg_${Date.now()}`,
+      role: 'system',
+      content: 'Connected to mock server',
+      createdAt: new Date().toISOString(),
+    },
+  }));
+
+  ws.on('message', (data) => {
+    try {
+      const message = JSON.parse(data.toString());
+      console.log('Received:', message.type);
+
+      if (message.type === 'send' && message.messages) {
+        // Get the last user message
+        const userMessages = message.messages.filter((m) => m.role === 'user');
+        const lastUserMessage = userMessages[userMessages.length - 1];
+
+        if (!lastUserMessage) {
+          ws.send(JSON.stringify({
+            type: 'error',
+            error: 'No user message found',
+          }));
+          return;
+        }
+
+        // Generate mock response
+        const response = generateMockResponse(lastUserMessage.content);
+        const messageId = `msg_${Date.now()}`;
+
+        // Simulate streaming response
+        const words = response.split(' ');
+        let index = 0;
+
+        const streamInterval = setInterval(() => {
+          if (index < words.length) {
+            // Send delta
+            ws.send(JSON.stringify({
+              type: 'delta',
+              delta: (index === 0 ? '' : ' ') + words[index],
+              messageId,
+              complete: false,
+            }));
+            index++;
+          } else {
+            // Send final message
+            clearInterval(streamInterval);
+            ws.send(JSON.stringify({
+              type: 'done',
+              message: {
+                id: messageId,
+                role: 'assistant',
+                content: response,
+                createdAt: new Date().toISOString(),
+                status: 'delivered',
+              },
+            }));
+          }
+        }, 50); // Typing speed: 50ms per word
+      } else if (message.type === 'ping') {
+        // Respond to ping
+        ws.send(JSON.stringify({ type: 'pong' }));
+      }
+    } catch (error) {
+      console.error('Error processing message:', error);
+      ws.send(JSON.stringify({
+        type: 'error',
+        error: error.message || 'Unknown error',
+      }));
+    }
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+  });
+});
+
+/**
+ * Generate mock response based on user input
+ */
+function generateMockResponse(userInput) {
+  const lowerInput = userInput.toLowerCase();
+
+  // Greeting responses
+  if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
+    return 'Hello! How can I help you today?';
+  }
+
+  // Help requests
+  if (lowerInput.includes('help')) {
+    return 'I\'m here to help! You can ask me questions, and I\'ll do my best to assist you. This is a mock response from the development server.';
+  }
+
+  // Weather queries
+  if (lowerInput.includes('weather')) {
+    return 'I don\'t have access to real-time weather data in this mock server, but I can help you with other questions!';
+  }
+
+  // Time queries
+  if (lowerInput.includes('time') || lowerInput.includes('what time')) {
+    return `The current time is ${new Date().toLocaleTimeString()}. This is a mock response.`;
+  }
+
+  // Name queries
+  if (lowerInput.includes('name') || lowerInput.includes('who are you')) {
+    return 'I\'m a chat assistant running on a mock WebSocket server. You can call me Assistant!';
+  }
+
+  // Goodbye
+  if (lowerInput.includes('bye') || lowerInput.includes('goodbye')) {
+    return 'Goodbye! Have a great day!';
+  }
+
+  // Questions
+  if (lowerInput.includes('?')) {
+    return `That's an interesting question! This is a mock response, so I can't provide real answers, but in a production environment, this would be handled by your AI model or backend service.`;
+  }
+
+  // Default response
+  return `I understand you said: "${userInput}". This is a mock response from the development WebSocket server. In a real implementation, this would be generated by an AI model or your backend service.`;
+}
+
+// Handle server shutdown gracefully
+process.on('SIGINT', () => {
+  console.log('\nShutting down server...');
+  wss.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('\nShutting down server...');
+  wss.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
+

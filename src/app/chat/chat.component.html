@@ -1,0 +1,251 @@
+<div class="chat-wrapper" [class.chat-open]="isOpen">
+  <!-- Chat Toggle Button -->
+  <button
+    *ngIf="!isOpen"
+    class="chat-toggle-button"
+    (click)="openChat()"
+    [attr.aria-label]="'Open chat'"
+    [attr.aria-expanded]="false"
+    type="button"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chat-window" *ngIf="isOpen" [attr.aria-label]="'Chat window'">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-header-content">
+        <h2 class="chat-title">Chat Assistant</h2>
+        <div class="chat-status" [attr.aria-live]="'polite'">
+          <span
+            class="status-indicator"
+            [class.status-connected]="connectionStatus === 'connected'"
+            [class.status-connecting]="connectionStatus === 'connecting'"
+            [class.status-disconnected]="connectionStatus === 'disconnected'"
+            [class.status-error]="connectionStatus === 'error'"
+          ></span>
+          <span class="status-text">{{ connectionStatus }}</span>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button
+          class="chat-button-icon"
+          (click)="clearMessages()"
+          [attr.aria-label]="'Clear messages'"
+          type="button"
+          title="Clear messages"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 6h18"></path>
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+          </svg>
+        </button>
+        <button
+          class="chat-button-icon"
+          (click)="closeChat()"
+          [attr.aria-label]="'Close chat'"
+          type="button"
+          title="Close chat"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Banner -->
+    <div
+      *ngIf="errorMessage"
+      class="chat-error-banner"
+      role="alert"
+      [attr.aria-live]="'assertive'"
+    >
+      <span>{{ errorMessage }}</span>
+      <button
+        class="chat-error-close"
+        (click)="errorMessage = undefined"
+        [attr.aria-label]="'Dismiss error'"
+        type="button"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Messages Container -->
+    <div
+      class="chat-messages"
+      #messagesContainer
+      (scroll)="onScroll()"
+      [attr.aria-live]="'polite'"
+      [attr.aria-atomic]="false"
+    >
+      <div *ngIf="messages.length === 0" class="chat-empty-state">
+        <p>Start a conversation by typing a message below.</p>
+      </div>
+
+      <div
+        *ngFor="let message of messages; trackBy: trackByMessageId"
+        class="chat-message"
+        [class.message-user]="message.role === 'user'"
+        [class.message-assistant]="message.role === 'assistant'"
+        [class.message-system]="message.role === 'system'"
+        [class.message-error]="hasError(message)"
+        [class.message-processing]="isProcessingMessage(message)"
+      >
+        <div class="message-avatar" [attr.aria-label]="message.role + ' avatar'">
+          {{ getAvatarInitials(message.role) }}
+        </div>
+        <div class="message-content">
+          <div class="message-text">
+            <span *ngIf="message.content">{{ message.content }}</span>
+            <span *ngIf="!message.content && isProcessingMessage(message)" class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+          <div class="message-meta">
+            <span class="message-time" [attr.title]="message.createdAt">
+              {{ formatTime(message.createdAt) }}
+            </span>
+            <span
+              *ngIf="message.status === 'error'"
+              class="message-error-text"
+              [attr.aria-label]="'Error: ' + message.error"
+            >
+              {{ message.error }}
+            </span>
+          </div>
+          <div *ngIf="hasError(message)" class="message-actions">
+            <button
+              class="chat-button-retry"
+              (click)="retryMessage(message.id)"
+              [attr.aria-label]="'Retry message'"
+              type="button"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div *ngIf="isProcessing && messages.length > 0" class="chat-message message-assistant message-processing">
+        <div class="message-avatar" aria-label="assistant avatar">A</div>
+        <div class="message-content">
+          <div class="message-text">
+            <span class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-container">
+      <div class="chat-input-wrapper">
+        <textarea
+          #messageInput
+          class="chat-input"
+          [(ngModel)]="currentMessage"
+          (keydown)="onKeyDown($event)"
+          [placeholder]="isProcessing ? 'Processing...' : 'Type your message...'"
+          [disabled]="isProcessing"
+          [attr.aria-label]="'Message input'"
+          rows="1"
+        ></textarea>
+        <div class="chat-input-actions">
+          <button
+            *ngIf="isProcessing"
+            class="chat-button-icon chat-button-cancel"
+            (click)="cancelCurrent()"
+            [attr.aria-label]="'Cancel request'"
+            type="button"
+            title="Cancel"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <button
+            class="chat-button-send"
+            (click)="sendMessage()"
+            [disabled]="!currentMessage.trim() || isProcessing"
+            [attr.aria-label]="'Send message'"
+            type="button"
+            title="Send (Enter)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="chat-input-hint">
+        Press <kbd>Enter</kbd> to send, <kbd>Shift+Enter</kbd> for newline
+      </div>
+    </div>
+  </div>
+</div>
+
