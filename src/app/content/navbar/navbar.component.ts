@@ -7,6 +7,8 @@ import {
   HostListener,
   inject,
   DestroyRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { ThemeService } from '../../shared/services/theme.service';
 
@@ -21,6 +23,7 @@ interface NavbarRoute {
   imports: [CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   systemTheme = 'light';
@@ -33,6 +36,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly themeService = inject(ThemeService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   constructor() {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -48,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.themeService.initTheme();
         this.systemTheme = this.themeService.isDarkTheme() ? 'dark' : 'light';
         this.setupScrollListener();
+        this.cdr.markForCheck();
       });
     }
   }
@@ -72,6 +77,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (!ticking) {
           window.requestAnimationFrame(() => {
             this.isScrolled = window.scrollY > 50;
+            this.cdr.markForCheck();
             ticking = false;
           });
           ticking = true;
@@ -85,6 +91,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.isBrowser) {
       this.themeService.toggleTheme();
       this.systemTheme = this.themeService.isDarkTheme() ? 'dark' : 'light';
+      this.cdr.markForCheck();
     }
   }
 
@@ -93,6 +100,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.isBrowser) {
       this.updateBodyScrollLock();
     }
+    this.cdr.markForCheck();
   }
 
   closeMobileMenu(): void {
@@ -100,6 +108,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.isBrowser) {
       this.updateBodyScrollLock();
     }
+    this.cdr.markForCheck();
   }
 
   private updateBodyScrollLock(): void {

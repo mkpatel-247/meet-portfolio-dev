@@ -5,6 +5,8 @@ import {
   inject,
   PLATFORM_ID,
   DestroyRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { GitHubStatsService } from '../shared/services/github-stats.service';
@@ -18,11 +20,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [CommonModule, CursorHoverDirective],
   templateUrl: './github-stats.component.html',
   styleUrl: './github-stats.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GitHubStatsComponent implements OnInit {
   private readonly githubStatsService = inject(GitHubStatsService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   // TODO: Replace with your GitHub username
   readonly githubUsername = 'mkpatel-247'; // Change this to your GitHub username
@@ -41,11 +45,13 @@ export class GitHubStatsComponent implements OnInit {
     if (!this.githubUsername || this.githubUsername.trim() === '') {
       this.error = 'Please set your GitHub username in the component';
       this.loading = false;
+      this.cdr.markForCheck();
       return;
     }
 
     this.loading = true;
     this.error = null;
+    this.cdr.markForCheck();
 
     this.githubStatsService
       .getGitHubStats(this.githubUsername)
@@ -54,12 +60,14 @@ export class GitHubStatsComponent implements OnInit {
         next: (stats) => {
           this.stats = stats;
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error: (err) => {
           console.error('Failed to load GitHub stats:', err);
           this.error =
             'Failed to load GitHub statistics. Please check your username and try again.';
           this.loading = false;
+          this.cdr.markForCheck();
         },
       });
   }

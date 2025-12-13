@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IExperienceDetails } from '../shared/interface/experience.interface';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperienceComponent {
   experienceDetails: IExperienceDetails[] = [

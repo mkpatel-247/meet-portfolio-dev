@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../shared/services/cursor.service';
 
@@ -14,6 +14,7 @@ interface IFloatIcons {
   imports: [CommonModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent implements OnInit {
   readonly isBrowser: boolean;
