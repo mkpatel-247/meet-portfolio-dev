@@ -322,9 +322,11 @@
 }
 
 .stat-icon {
-  width: 16px;
-  height: 16px;
+  font-size: 16px;
   color: rgba(255, 140, 0, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // ============================================
@@ -466,6 +468,444 @@
   }
 
   .loading-spinner {
+    animation: none;
+  }
+}
+
+// ============================================
+// CODE ACTIVITY SECTION
+// ============================================
+
+.code-activity-section {
+  margin-bottom: 1rem;
+}
+
+.code-activity-header {
+  margin-bottom: 2rem;
+}
+
+.code-activity-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.9);
+  }
+}
+
+.code-activity-subtitle {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.65);
+  }
+}
+
+.code-activity-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}
+
+// ============================================
+// CONTRIBUTION GRAPH CARD
+// ============================================
+
+.contribution-graph-card {
+  flex: 1;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  :host-context(body.light) & {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 140, 0, 0.3);
+    box-shadow: 0 12px 40px rgba(255, 140, 0, 0.15);
+
+    :host-context(body.light) & {
+      box-shadow: 0 12px 40px rgba(255, 140, 0, 0.1);
+    }
+  }
+}
+
+.graph-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.graph-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.graph-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: brightness(0.9);
+  transition: filter 0.2s ease;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+.graph-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.9);
+  }
+}
+
+.graph-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.contribution-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 140, 0, 0.15);
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  color: rgba(255, 140, 0, 0.95);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.graph-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.6);
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.legend-label {
+  font-size: 0.6875rem;
+}
+
+.legend-squares {
+  display: flex;
+  gap: 2px;
+}
+
+.legend-square {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.contribution-grid-wrapper {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.contribution-grid {
+  display: flex;
+  gap: 3px;
+  min-width: fit-content;
+  margin-bottom: 0.5rem;
+}
+
+.contribution-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.contribution-day {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+
+  &.empty-day {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &:not(.empty-day):hover {
+    transform: scale(1.2);
+    z-index: 10;
+    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.5);
+  }
+
+  &[data-count="0"]:not(.empty-day) {
+    cursor: pointer;
+  }
+}
+
+.month-labels {
+  display: flex;
+  gap: 0;
+  padding-left: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: fit-content;
+  position: relative;
+  height: 16px;
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.month-label {
+  text-align: left;
+  white-space: nowrap;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+// ============================================
+// ACTIVITY STATS CARDS
+// ============================================
+
+.activity-stats-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 240px;
+
+  @media (min-width: 1024px) {
+    min-width: 260px;
+  }
+}
+
+.activity-stat-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  :host-context(body.light) & {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 140, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(255, 140, 0, 0.15);
+
+    :host-context(body.light) & {
+      box-shadow: 0 8px 24px rgba(255, 140, 0, 0.1);
+    }
+  }
+}
+
+.streak-card {
+  &:hover {
+    .flame-icon {
+      filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.8));
+    }
+  }
+}
+
+.stat-card-header {
+  margin-bottom: 0.75rem;
+}
+
+.stat-card-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.stat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.stat-card-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1;
+  letter-spacing: -0.02em;
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.9);
+  }
+}
+
+.stat-card-unit {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 0.25rem;
+
+  :host-context(body.light) & {
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.stat-card-icon {
+  font-size: 24px;
+  color: rgba(255, 140, 0, 0.9);
+  margin-left: auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flame-icon {
+  font-size: 20px;
+}
+
+.pr-icon {
+  font-size: 20px;
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes flame-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.1) rotate(-2deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.05) rotate(2deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.08) rotate(-1deg);
+    opacity: 0.95;
+  }
+}
+
+// ============================================
+// RESPONSIVE ADJUSTMENTS FOR CODE ACTIVITY
+// ============================================
+
+@media (max-width: 1023px) {
+  .code-activity-content {
+    flex-direction: column;
+  }
+
+  .activity-stats-cards {
+    flex-direction: row;
+    min-width: auto;
+  }
+
+  .activity-stat-card {
+    flex: 1;
+  }
+
+  .stat-card-value {
+    font-size: 2rem;
+  }
+
+  .graph-header-right {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .contribution-graph-card {
+    padding: 1.5rem;
+  }
+
+  .activity-stats-cards {
+    flex-direction: column;
+  }
+
+  .activity-stat-card {
+    padding: 1.5rem;
+  }
+
+  .stat-card-value {
+    font-size: 2rem;
+  }
+
+  .graph-title {
+    font-size: 1.125rem;
+  }
+
+  .contribution-day {
+    width: 10px;
+    height: 10px;
+  }
+
+  .month-label {
+    width: 10px;
+  }
+}
+
+// ============================================
+// ACCESSIBILITY FOR CODE ACTIVITY
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .contribution-day,
+  .activity-stat-card,
+  .stat-card-icon {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contribution-day:hover,
+  .activity-stat-card:hover {
+    transform: scale(1.1);
+  }
+
+  .flame-icon {
     animation: none;
   }
 }

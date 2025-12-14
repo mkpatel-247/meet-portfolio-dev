@@ -1,13 +1,9 @@
 <section id="github-stats" class="py-20 md:py-32">
-  <h2 class="text-4xl sm:text-5xl font-extrabold mb-4 relative" data-aos="fade-up">
+  <h2 class="text-4xl sm:text-5xl font-extrabold mb-12 relative" data-aos="fade-up">
     <span
       class="text-gray-400 opacity-20 absolute -left-10 text-9xl top-1/2 transform -translate-y-1/2 -z-10 hidden md:block">GitHub</span>
     <span class="accent-text">//</span> GitHub Statistics
   </h2>
-  <p class="text-gray-400 dark:text-gray-500 mb-12 text-base md:text-lg max-w-2xl" data-aos="fade-up"
-    data-aos-delay="100">
-    My open-source contributions and coding activity on GitHub.
-  </p>
 
   @if (loading) {
   <div class="flex items-center justify-center py-20" data-aos="fade-up">
@@ -55,6 +51,89 @@
       </div>
     </div>
 
+    <!-- Code Activity Section -->
+    @if (stats.contributionStats) {
+    <div class="code-activity-section" data-aos="fade-up" data-aos-delay="600">
+      <div class="code-activity-header">
+        <h3 class="code-activity-title">
+          <h3 class="section-title">Activity</h3>
+        </h3>
+      </div>
+
+      <div class="code-activity-content">
+        <!-- Contribution Graph -->
+        <div class="contribution-graph-card" data-aos="fade-up" data-aos-delay="650">
+          <div class="graph-header">
+            <div class="graph-title-wrapper">
+              <img src="https://skillicons.dev/icons?i=github" alt="GitHub" class="graph-icon" />
+              <span class="graph-title">Contribution Graph</span>
+            </div>
+            <div class="graph-header-right">
+              <div class="contribution-badge">
+                {{ formatNumber(stats.contributionStats.contributionsThisYear) }} Contributions
+              </div>
+              <div class="graph-legend">
+                <span class="legend-label">Less</span>
+                <div class="legend-squares">
+                  @for (level of [0, 1, 2, 3, 4]; track level) {
+                  <div class="legend-square" [style.background-color]="getContributionColor(level)"></div>
+                  }
+                </div>
+                <span class="legend-label">More</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contribution-grid-wrapper">
+            <div class="contribution-grid">
+              @for (week of getContributionWeeks(); track $index) {
+              <div class="contribution-week">
+                @for (day of week; track day.date || $index) {
+                <div class="contribution-day" [class.empty-day]="!day.date"
+                  [style.background-color]="day.date ? getContributionColor(day.level) : 'transparent'"
+                  [title]="day.date ? (formatDate(day.date) + ': ' + day.count + ' contributions') : ''"
+                  [attr.data-count]="day.count"></div>
+                }
+              </div>
+              }
+            </div>
+            <div class="month-labels">
+              @for (monthLabel of getMonthLabels(); track monthLabel.label + monthLabel.position) {
+              <span class="month-label" [style.left.px]="monthLabel.position * 15">{{ monthLabel.label }}</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="activity-stats-cards">
+          <!-- Current Streak Card -->
+          <div class="activity-stat-card streak-card" data-aos="fade-up" data-aos-delay="700">
+            <div class="stat-card-header">
+              <span class="stat-card-label">CURRENT STREAK</span>
+            </div>
+            <div class="stat-card-content">
+              <span class="stat-card-value">{{ stats.contributionStats.currentStreak }}</span>
+              <span class="stat-card-unit">Days</span>
+              <i class="fas fa-fire stat-card-icon flame-icon" aria-hidden="true"></i>
+            </div>
+          </div>
+
+          <!-- Pull Requests Card -->
+          <div class="activity-stat-card pr-card" data-aos="fade-up" data-aos-delay="750">
+            <div class="stat-card-header">
+              <span class="stat-card-label">PULL REQUESTS</span>
+            </div>
+            <div class="stat-card-content">
+              <span class="stat-card-value">{{ stats.pullRequestsCount || 0 }}</span>
+              <i class="fas fa-code-branch stat-card-icon pr-icon" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
     <!-- Top Repositories -->
     @if (stats.topRepos.length > 0) {
     <div class="repos-section" data-aos="fade-up" data-aos-delay="400">
@@ -77,17 +156,11 @@
           }
           <div class="repo-stats">
             <div class="repo-stat">
-              <svg class="stat-icon" fill="currentColor" viewBox="0 0 16 16">
-                <path
-                  d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z" />
-              </svg>
+              <i class="fas fa-star stat-icon" aria-hidden="true"></i>
               <span>{{ formatNumber(repo.stargazers_count) }}</span>
             </div>
             <div class="repo-stat">
-              <svg class="stat-icon" fill="currentColor" viewBox="0 0 16 16">
-                <path
-                  d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
-              </svg>
+              <i class="fas fa-code-branch stat-icon" aria-hidden="true"></i>
               <span>{{ formatNumber(repo.forks_count) }}</span>
             </div>
           </div>
@@ -97,26 +170,6 @@
     </div>
     }
 
-    <!-- Language Statistics -->
-    @if (getTopLanguages().length > 0) {
-    <div class="languages-section" data-aos="fade-up" data-aos-delay="500">
-      <h3 class="section-title">Top Languages</h3>
-      <div class="languages-grid">
-        @for (lang of getTopLanguages(); track lang.name) {
-        <div class="language-item">
-          <div class="language-header">
-            <span class="language-name">{{ lang.name }}</span>
-            <span class="language-count">{{ lang.count }} repos</span>
-          </div>
-          <div class="language-bar-container">
-            <div class="language-bar" [style.width.%]="(lang.count / getTopLanguages()[0].count) * 100"
-              [style.background-color]="getLanguageColor(lang.name)"></div>
-          </div>
-        </div>
-        }
-      </div>
-    </div>
-    }
   </div>
   }
 </section>

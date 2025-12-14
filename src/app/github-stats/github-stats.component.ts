@@ -72,15 +72,6 @@ export class GitHubStatsComponent implements OnInit {
       });
   }
 
-  getTopLanguages(): Array<{ name: string; count: number }> {
-    if (!this.stats) return [];
-
-    return Object.entries(this.stats.languages)
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
-  }
-
   formatNumber(num: number): string {
     if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'k';
@@ -115,5 +106,133 @@ export class GitHubStatsComponent implements OnInit {
     };
 
     return colors[language] || colors['Other'];
+  }
+
+  /**
+   * Get contribution graph organized by weeks
+   */
+  getContributionWeeks(): Array<
+    Array<{ date: string; count: number; level: number }>
+  > {
+    if (!this.stats?.contributionStats) return [];
+
+    const days = this.stats.contributionStats.contributionsByDay;
+    if (days.length === 0) return [];
+
+    const weeks: Array<Array<{ date: string; count: number; level: number }>> =
+      [];
+    let currentWeek: Array<{ date: string; count: number; level: number }> = [];
+
+    // Get the first day's day of week (0 = Sunday, 6 = Saturday)
+    const firstDate = new Date(days[0].date);
+
+    const firstDayOfWeek = firstDate.getDay();
+
+    // Add empty days at the beginning if the first day is not Sunday
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      currentWeek.push({
+        date: '',
+        count: 0,
+        level: 0,
+      });
+    }
+
+    days.forEach((day) => {
+      const date = new Date(day.date);
+      const dayOfWeek = date.getDay();
+
+      // If it's Sunday and we have a week, start a new week
+      if (dayOfWeek === 0 && currentWeek.length > 0) {
+        weeks.push([...currentWeek]);
+        currentWeek = [];
+      }
+
+      currentWeek.push({
+        date: day.date,
+        count: day.count,
+        level: day.level,
+      });
+
+      // If it's Saturday, we've completed a week
+      if (dayOfWeek === 6) {
+        weeks.push([...currentWeek]);
+        currentWeek = [];
+      }
+    });
+
+    // Add the last incomplete week if it exists
+    if (currentWeek.length > 0) {
+      // Fill remaining days with empty entries
+      while (currentWeek.length < 7) {
+        currentWeek.push({
+          date: '',
+          count: 0,
+          level: 0,
+        });
+      }
+      weeks.push(currentWeek);
+    }
+
+    return weeks;
+  }
+
+  /**
+   * Get contribution color based on level
+   */
+  getContributionColor(level: number): string {
+    const colors = [
+      'rgba(255, 255, 255, 0.03)', // 0 - no contributions (dark gray)
+      'rgba(255, 140, 0, 0.4)', // 1 - low
+      'rgba(255, 140, 0, 0.6)', // 2 - medium
+      'rgba(255, 140, 0, 0.8)', // 3 - high
+      'rgba(255, 140, 0, 1)', // 4 - very high (bright orange)
+    ];
+    return colors[level] || colors[0];
+  }
+
+  /**
+   * Get month labels for contribution graph
+   * Returns an array with month labels positioned at the start of each month
+   */
+  getMonthLabels(): Array<{ label: string; position: number }> {
+    if (!this.stats?.contributionStats) return [];
+
+    const weeks = this.getContributionWeeks();
+    if (weeks.length === 0) return [];
+
+    const monthLabels: Array<{ label: string; position: number }> = [];
+    const seenMonths = new Set<string>();
+
+    // Find first day of each month in the weeks
+    weeks.forEach((week, weekIndex) => {
+      for (const day of week) {
+        if (!day.date) continue;
+
+        const date = new Date(day.date);
+        const monthKey = date.toLocaleDateString('en-US', { month: 'short' });
+        const dayOfMonth = date.getDate();
+
+        // Show month label on the first occurrence (day 1-7) of each month
+        if (dayOfMonth <= 7 && !seenMonths.has(monthKey)) {
+          monthLabels.push({ label: monthKey, position: weekIndex });
+          seenMonths.add(monthKey);
+          break; // Only one label per week
+        }
+      }
+    });
+
+    return monthLabels;
+  }
+
+  /**
+   * Format date for tooltip
+   */
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   }
 }
