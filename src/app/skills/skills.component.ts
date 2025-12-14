@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CursorHoverDirective } from '../../app/shared/directives/cursor-hover.directive';
 
 @Component({
@@ -8,6 +8,7 @@ import { CursorHoverDirective } from '../../app/shared/directives/cursor-hover.d
   imports: [CommonModule, CursorHoverDirective],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsComponent {
   skillCategories = [

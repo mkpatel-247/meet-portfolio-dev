@@ -26,6 +26,9 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "aos"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -54,11 +57,27 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "10kB"
+                  "maximumWarning": "12kB",
+                  "maximumError": "15kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
+              "sourceMap": {
+                "scripts": false,
+                "styles": false,
+                "vendor": false,
+                "hidden": false
+              },
+              "namedChunks": false,
+              "extractLicenses": true
             },
             "development": {
               "optimization": false,

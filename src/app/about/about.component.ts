@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CursorHoverDirective } from '../../app/shared/directives/cursor-hover.directive';
 
 @Component({
@@ -7,6 +7,7 @@ import { CursorHoverDirective } from '../../app/shared/directives/cursor-hover.d
   imports: [CursorHoverDirective],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent {
   aboutMe = [
