@@ -1,0 +1,28 @@
+<div class="bento-card relative rounded-3xl p-7 flex flex-col gap-4 overflow-hidden transition-all duration-400"
+  [attr.data-position]="position" [class.highlighted]="highlighted">
+  <!-- Shimmer effect on hover -->
+  <div
+    class="absolute inset-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-orange-500/10 to-transparent transition-all duration-600 hover:left-full pointer-events-none">
+  </div>
+
+  <!-- Card Header -->
+  <div class="card-header flex items-center gap-3 mb-1 relative z-10">
+    <div
+      class="card-icon w-10 h-10 rounded-xl inline-flex items-center justify-center text-2xl transition-all duration-300">
+      {{ icon }}
+    </div>
+    <h3 class="card-title text-2xl font-extrabold tracking-tight">{{ title }}</h3>
+  </div>
+
+  <!-- Card Description -->
+  @if (description) {
+  <p class="card-description text-sm max-w-2xl leading-relaxed relative z-10">
+    {{ description }}
+  </p>
+  }
+
+  <!-- Content Projection -->
+  <div class="relative z-10">
+    <ng-content></ng-content>
+  </div>
+</div>

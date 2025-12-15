@@ -54,11 +54,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       // Initialize AOS immediately after view init for faster loading
       requestAnimationFrame(() => {
-        AOS.init({ 
-          once: true, 
+        AOS.init({
+          once: true,
           duration: 800,
           offset: 50,
-          delay: 0
+          delay: 0,
         });
         this.cdr.markForCheck();
       });

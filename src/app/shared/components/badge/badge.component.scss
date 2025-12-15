@@ -1,0 +1,59 @@
+/* Skill Badge Styles - Matching Original Design */
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--border-dark, rgba(55, 65, 81, 0.9));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+
+  img {
+    width: 1.3rem;
+    height: 1.3rem;
+    object-fit: contain;
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-color, #ff8c00);
+    background: rgba(15, 23, 42, 0.95);
+  }
+}
+
+.skill-label {
+  font-size: 0.85rem;
+  color: var(--text-dark-secondary, #e5e7eb);
+  font-weight: 500;
+}
+
+/* Highlight badge */
+.highlighted-badge {
+  border-color: var(--accent-color, #ff8c00) !important;
+  box-shadow: 0 0 0 1px rgba(248, 250, 252, 0.08),
+    0 8px 24px rgba(255, 140, 0, 0.4) !important;
+}
+
+/* Light Theme Overrides */
+:host-context(body.light) {
+  .skill-badge {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--border-light, rgba(229, 231, 235, 0.9));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 24px rgba(255, 140, 0, 0.15);
+    }
+  }
+
+  .skill-label {
+    color: var(--text-light-secondary, #374151);
+  }
+}
+
+
