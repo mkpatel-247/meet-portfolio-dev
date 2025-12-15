@@ -1,0 +1,8 @@
+<div
+  class="skill-badge inline-flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 cursor-default"
+  [class.highlighted-badge]="highlighted">
+  @if (iconUrl) {
+  <img [src]="iconUrl" [alt]="label" class="w-5 h-5 object-contain" />
+  }
+  <span class="skill-label text-sm font-medium">{{ label }}</span>
+</div>
