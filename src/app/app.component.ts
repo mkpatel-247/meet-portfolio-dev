@@ -8,8 +8,8 @@ import {
   inject,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './content/navbar/navbar.component';
-import { FooterComponent } from './content/footer/footer.component';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 import { HeroComponent } from './hero/hero.component';
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
@@ -19,7 +19,7 @@ import { ExperienceComponent } from './experience/experience.component';
 import { ContactComponent } from './contact/contact.component';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
 import { GitHubStatsComponent } from './github-stats/github-stats.component';
-import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
+import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
 
 @Component({

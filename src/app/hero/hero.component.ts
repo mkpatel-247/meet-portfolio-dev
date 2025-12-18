@@ -1,6 +1,12 @@
-import { Component, OnInit, PLATFORM_ID, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { CursorService } from '../shared/services/cursor.service';
+import { CursorService } from '../core/services/cursor.service';
 
 interface IFloatIcons {
   name: string;
@@ -80,12 +86,14 @@ export class HeroComponent implements OnInit {
 
   scrollToNextSection(): void {
     if (!this.isBrowser) return;
-    
-    const aboutSection = document.getElementById('about') || document.getElementById('skills');
+
+    const aboutSection =
+      document.getElementById('about') || document.getElementById('skills');
     if (aboutSection) {
       const headerOffset = 100;
       const elementPosition = aboutSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,

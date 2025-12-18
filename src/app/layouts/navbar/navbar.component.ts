@@ -10,7 +10,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { ThemeService } from '../../shared/services/theme.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 interface NavbarRoute {
   label: string;

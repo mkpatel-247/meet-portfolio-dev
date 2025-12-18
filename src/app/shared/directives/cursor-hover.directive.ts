@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input, inject } from '@angular/core';
-import { CursorService } from '../services/cursor.service';
+import { CursorService } from '../../core/services/cursor.service';
 
 @Directive({
   selector: '[appCursorHover]',
