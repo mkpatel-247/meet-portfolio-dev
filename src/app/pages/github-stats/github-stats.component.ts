@@ -10,20 +10,23 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { GitHubStatsService } from '../../core/services/github-stats.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { CursorHoverDirective } from '../../shared/directives/cursor-hover.directive';
 import { IGitHubStats } from '../../core/interface/github.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SectionTitleComponent } from '../../shared/components/section-title/section-title.component';
 
 @Component({
   selector: 'app-github-stats',
   standalone: true,
-  imports: [CommonModule, CursorHoverDirective],
+  imports: [CommonModule, CursorHoverDirective, SectionTitleComponent],
   templateUrl: './github-stats.component.html',
   styleUrl: './github-stats.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GitHubStatsComponent implements OnInit {
   private readonly githubStatsService = inject(GitHubStatsService);
+  private readonly themeService = inject(ThemeService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -178,16 +181,32 @@ export class GitHubStatsComponent implements OnInit {
 
   /**
    * Get contribution color based on level
+   * Theme-aware: uses different colors for light/dark themes
    */
   getContributionColor(level: number): string {
-    const colors = [
-      'rgba(255, 255, 255, 0.03)', // 0 - no contributions (dark gray)
-      'rgba(255, 140, 0, 0.4)', // 1 - low
-      'rgba(255, 140, 0, 0.6)', // 2 - medium
-      'rgba(255, 140, 0, 0.8)', // 3 - high
-      'rgba(255, 140, 0, 1)', // 4 - very high (bright orange)
-    ];
-    return colors[level] || colors[0];
+    const isDark = this.themeService.isDarkTheme();
+
+    if (isDark) {
+      // Dark theme colors - increased opacity for better visibility
+      const darkColors = [
+        'rgba(255, 255, 255, 0.15)', // 0 - no contributions (much more visible)
+        'rgba(255, 140, 0, 0.5)',    // 1 - low
+        'rgba(255, 140, 0, 0.7)',    // 2 - medium
+        'rgba(255, 140, 0, 0.85)',   // 3 - high
+        'rgba(255, 140, 0, 1)',      // 4 - very high (bright orange)
+      ];
+      return darkColors[level] || darkColors[0];
+    } else {
+      // Light theme colors - stronger colors for visibility
+      const lightColors = [
+        'rgba(0, 0, 0, 0.1)',        // 0 - no contributions (more visible)
+        'rgba(255, 140, 0, 0.4)',    // 1 - low
+        'rgba(255, 140, 0, 0.6)',    // 2 - medium
+        'rgba(255, 140, 0, 0.8)',    // 3 - high
+        'rgba(255, 140, 0, 1)',      // 4 - very high
+      ];
+      return lightColors[level] || lightColors[0];
+    }
   }
 
   /**

@@ -27,15 +27,21 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+// Dark theme: white text on hover
+body.dark .work-item:hover ul li {
+  color: white !important;
+}
+
+// Light theme: dark text on hover
+body.light .work-item:hover ul li {
+  color: var(--text-light, #1f2937) !important;
+}
+
 // Improve list item spacing and readability
 .work-item ul {
   li {
     line-height: 1.7;
     transition: color 0.2s ease;
-    
-    &:hover {
-      color: rgba(255, 255, 255, 0.9);
-    }
   }
 }
 
@@ -50,4 +56,3 @@
     }
   }
 }
-
