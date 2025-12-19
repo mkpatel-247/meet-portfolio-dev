@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { CursorService } from '../core/services/cursor.service';
+import { CursorService } from '../../core/services/cursor.service';
 
 interface IFloatIcons {
   name: string;

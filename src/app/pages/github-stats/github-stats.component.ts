@@ -9,9 +9,9 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { GitHubStatsService } from '../core/services/github-stats.service';
-import { CursorHoverDirective } from '../shared/directives/cursor-hover.directive';
-import { IGitHubStats } from '../core/interface/github.interface';
+import { GitHubStatsService } from '../../core/services/github-stats.service';
+import { CursorHoverDirective } from '../../shared/directives/cursor-hover.directive';
+import { IGitHubStats } from '../../core/interface/github.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

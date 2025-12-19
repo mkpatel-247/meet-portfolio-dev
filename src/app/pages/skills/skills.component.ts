@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { CursorHoverDirective } from '../../app/shared/directives/cursor-hover.directive';
+import { CursorHoverDirective } from '../../shared/directives/cursor-hover.directive';
 
 @Component({
   selector: 'app-skills',
