@@ -8,18 +8,18 @@ import {
   inject,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './content/navbar/navbar.component';
-import { FooterComponent } from './content/footer/footer.component';
-import { HeroComponent } from './hero/hero.component';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { FooterComponent } from './layouts/footer/footer.component';
+import { HeroComponent } from './pages/hero/hero.component';
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
-import { AboutComponent } from './about/about.component';
-import { SkillsComponent } from './skills/skills.component';
-import { ExperienceComponent } from './experience/experience.component';
-import { ContactComponent } from './contact/contact.component';
+import { AboutComponent } from './pages/about/about.component';
+import { SkillsComponent } from './pages/skills/skills.component';
+import { ExperienceComponent } from './pages/experience/experience.component';
+import { ContactComponent } from './pages/contact/contact.component';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
-import { GitHubStatsComponent } from './github-stats/github-stats.component';
-import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
+import { GitHubStatsComponent } from './pages/github-stats/github-stats.component';
+import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
 
 @Component({
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private googleAnalyticsService: GoogleAnalyticsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.gaService.init();

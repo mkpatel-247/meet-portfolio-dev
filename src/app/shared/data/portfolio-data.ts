@@ -1,4 +1,4 @@
-import { IExperienceDetails } from '../../shared/interface/experience.interface';
+import { IExperienceDetails } from '../../core/interface/experience.interface';
 
 export const ABOUT_ME_DATA: string[] = [
   'A Software Engineer who builds scalable, secure, and high-performance applications using the MEAN stack. My journey began with small experiments and debugging sessions, but it quickly evolved into a deep interest in how real systems work, how users think, and how technology can solve meaningful problems. ',
@@ -43,6 +43,6 @@ export const EXPERIENCE_DATA: IExperienceDetails[] = [
 ];
 
 export const EXTRA_DATA: string[] = [
-    // Add any additional context or data here that you want the RAG system to know about, 
-    // but isn't necessarily displayed on the main UI.
+  // Add any additional context or data here that you want the RAG system to know about,
+  // but isn't necessarily displayed on the main UI.
 ];

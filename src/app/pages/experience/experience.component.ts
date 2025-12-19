@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { IExperienceDetails } from '../shared/interface/experience.interface';
+import { IExperienceDetails } from '../../core/interface/experience.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
