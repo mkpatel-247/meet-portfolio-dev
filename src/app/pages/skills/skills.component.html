@@ -1,9 +1,5 @@
 <section id="skills" class="py-20 md:py-32">
-  <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 relative" data-aos="fade-up">
-    <span
-      class="text-gray-400 dark:text-gray-500 opacity-20 absolute -left-10 text-9xl top-1/2 transform -translate-y-1/2 -z-10 hidden md:block">Skills</span>
-    <span class="accent-text">//</span> Skills & Technologies
-  </h2>
+  <app-section-title title="Skills & Technologies" backgroundText="Skills"></app-section-title>
 
   <div class="bento-grid" data-aos="fade-up" data-aos-delay="200">
     @for (category of skillCategories; track category.title; let categoryIndex = $index) {
@@ -29,7 +25,12 @@
         @for (skill of category.skills; track skill.value) {
         <div class="tool-item interactive" appCursorHover="image" [hoverScale]="1.05">
           <span class="tool-label">{{skill.label}}</span>
+          @if (skill.deviconClass) {
+          <i [class]="skill.deviconClass"
+            class="tool-icon text-[1.4rem] leading-none flex items-center justify-center"></i>
+          } @else {
           <img src="https://skillicons.dev/icons?i={{skill.value}}" alt="{{skill.label}}" class="tool-icon" />
+          }
         </div>
         }
       </div>
@@ -38,7 +39,12 @@
       <div class="ai-tools-list">
         @for (skill of category.skills; track skill.value) {
         <div class="ai-tool-item interactive" appCursorHover="image" [hoverScale]="1.05">
+          @if (skill.deviconClass) {
+          <i [class]="skill.deviconClass"
+            class="ai-tool-icon text-[1.6rem] leading-none flex items-center justify-center"></i>
+          } @else {
           <img src="https://skillicons.dev/icons?i={{skill.value}}" alt="{{skill.label}}" class="ai-tool-icon" />
+          }
           <span class="ai-tool-label">{{skill.label}}</span>
         </div>
         }
@@ -49,7 +55,11 @@
         @for (skill of category.skills; track skill.value) {
         <div class="skill-badge interactive" appCursorHover="image" [hoverScale]="1.1">
           <!-- [class.highlighted-badge]="skill.label === 'Nginx'" -->
+          @if (skill.deviconClass) {
+          <i [class]="skill.deviconClass" class="text-[1.35rem] leading-none flex items-center justify-center"></i>
+          } @else {
           <img src="https://skillicons.dev/icons?i={{skill.value}}" alt="{{skill.label}}" />
+          }
           <span class="skill-label">{{skill.label}}</span>
         </div>
         }

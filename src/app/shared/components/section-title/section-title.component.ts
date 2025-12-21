@@ -10,4 +10,5 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 export class SectionTitleComponent {
   @Input() title = '';
   @Input() showBackground = true;
+  @Input() backgroundText = '';
 }

@@ -1,9 +1,5 @@
 <section id="work" class="py-20 md:py-32">
-  <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 relative" data-aos="fade-up">
-    <span
-      class="text-gray-400 opacity-20 absolute -left-10 text-9xl top-1/2 transform -translate-y-1/2 -z-10 hidden md:block">Experience</span>
-    <span class="accent-text">//</span> Where I've Worked
-  </h2>
+  <app-section-title title="Where I've Worked" backgroundText="Experience"></app-section-title>
 
   <!-- Timeline/List Structure -->
   <div class="space-y-8 md:space-y-12">
@@ -17,9 +13,9 @@
           &#64; {{work.organization}}
         </span>
       </h3>
-      <ul class="list-disc ml-6 md:ml-8 mt-3 space-y-2 text-gray-400 text-muted">
+      <ul class="list-disc ml-6 md:ml-8 mt-3 space-y-2 text-muted">
         @for(points of work.description; track $index) {
-        <li>{{points}}</li>
+        <li class="">{{points}}</li>
         }
       </ul>
     </div>

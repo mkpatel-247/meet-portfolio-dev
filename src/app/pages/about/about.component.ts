@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CursorHoverDirective } from '../../shared/directives/cursor-hover.directive';
+import { SectionTitleComponent } from '../../shared/components/section-title/section-title.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CursorHoverDirective],
+  imports: [CursorHoverDirective, SectionTitleComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

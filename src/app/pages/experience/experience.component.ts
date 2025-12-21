@@ -1,11 +1,12 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IExperienceDetails } from '../../core/interface/experience.interface';
 import { CommonModule } from '@angular/common';
+import { SectionTitleComponent } from '../../shared/components/section-title/section-title.component';
 
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SectionTitleComponent],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -452,6 +452,7 @@
 // ============================================
 
 @media (prefers-reduced-motion: reduce) {
+
   .stats-card,
   .repo-card,
   .language-item {
@@ -656,16 +657,24 @@
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  :host-context(body.light) & {
+    border-color: rgba(0, 0, 0, 0.12);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
   &.empty-day {
     cursor: default;
     pointer-events: none;
+    border: none;
   }
 
   &:not(.empty-day):hover {
     transform: scale(1.2);
     z-index: 10;
-    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.6);
+    border-color: rgba(255, 140, 0, 0.8);
   }
 
   &[data-count="0"]:not(.empty-day) {
@@ -811,18 +820,23 @@
 // ============================================
 
 @keyframes flame-flicker {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
   }
+
   25% {
     transform: scale(1.1) rotate(-2deg);
     opacity: 0.9;
   }
+
   50% {
     transform: scale(1.05) rotate(2deg);
     opacity: 1;
   }
+
   75% {
     transform: scale(1.08) rotate(-1deg);
     opacity: 0.95;
@@ -894,6 +908,7 @@
 // ============================================
 
 @media (prefers-reduced-motion: reduce) {
+
   .contribution-day,
   .activity-stat-card,
   .stat-card-icon {
@@ -909,4 +924,3 @@
     animation: none;
   }
 }
-

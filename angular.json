@@ -39,7 +39,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/aos/dist/aos.css"
+              "node_modules/aos/dist/aos.css",
+              "node_modules/devicon/devicon.min.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -140,7 +141,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/aos/dist/aos.css"
+              "node_modules/aos/dist/aos.css",
+              "node_modules/devicon/devicon.min.css"
             ],
             "scripts": []
           }
