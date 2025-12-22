@@ -13,6 +13,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
 
@@ -24,6 +25,7 @@ import { filter } from 'rxjs';
     NavbarComponent,
     FooterComponent,
     CustomCursorComponent,
+    LoaderComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

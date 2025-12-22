@@ -10,8 +10,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ThemeService } from '../../core/services/theme.service';
+import { LoaderService } from '../../shared/services/loader.service';
 
 interface NavbarRoute {
   label: string;
@@ -39,8 +40,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private readonly themeService = inject(ThemeService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
 
-  constructor() {
+  constructor(private loaderService: LoaderService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -151,17 +153,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     const element = document.querySelector(target);
+
     if (element && this.isBrowser) {
-      // Close mobile menu first if open
+      // Element exists in DOM - scroll to it
       if (this.isMobileMenuOpen) {
         this.closeMobileMenu();
-        // Small delay to allow menu to close before scrolling
         setTimeout(() => {
           this.performScroll(element);
         }, 100);
       } else {
         this.performScroll(element);
       }
+    } else if (this.isBrowser) {
+      // Element not in DOM (e.g., on blog page) - navigate to home with fragment
+      const fragment = target.replace('#', '');
+
+      // Close mobile menu first if open
+      if (this.isMobileMenuOpen) {
+        this.closeMobileMenu();
+      }
+      this.loaderService.show();
+      // Navigate to home page with fragment
+      this.router.navigate(['/'], { fragment }).then(() => {
+        // After navigation, wait for DOM to update and scroll
+        setTimeout(() => {
+          const targetElement = document.querySelector(target);
+          if (targetElement) {
+            this.performScroll(targetElement);
+            this.loaderService.hide();
+          }
+        }, 100);
+      });
     }
   }
 
