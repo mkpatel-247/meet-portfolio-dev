@@ -1,0 +1,251 @@
+@if (notFound) {
+<!-- 404 State -->
+<div class="blog-page min-h-screen pt-32 pb-20 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl font-bold mb-4">Post Not Found</h1>
+        <p class="text-[var(--muted-dark)] mb-8">The blog post you're looking for doesn't exist.</p>
+        <a routerLink="/blog"
+            class="inline-flex items-center text-[var(--accent-color)] hover:text-[var(--accent-hover)] font-medium">
+            ← Back to Blog
+        </a>
+    </div>
+</div>
+} @else if (post) {
+<div class="blog-page min-h-screen pt-32 pb-20 px-6 animate-fade-in">
+    <article class="max-w-3xl mx-auto">
+
+        <!-- Breadcrumb / Back Link -->
+        <div class="mb-8">
+            <a routerLink="/blog"
+                class="group inline-flex items-center text-sm font-medium text-[var(--muted-light)] dark:text-[var(--muted-dark)] hover:text-[var(--accent-color)] transition-colors">
+                <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                </svg>
+                Back to Blog
+            </a>
+        </div>
+
+        <!-- Header Content -->
+        <header class="mb-10">
+            <div
+                class="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-[var(--accent-color)] mb-4">
+                @for (cat of post.categories; track cat; let last = $last) {
+                <span>{{ cat }}</span>
+                @if (!last) {
+                <span class="text-[var(--muted-dark)]">•</span>
+                }
+                }
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+                {{ post.title }}
+            </h1>
+            <div
+                class="flex items-center gap-4 text-sm text-[var(--muted-light)] dark:text-[var(--muted-dark)] border-b border-[var(--border-light)] dark:border-[var(--border-dark)] pb-8">
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 rounded-full bg-[var(--card-light)] dark:bg-[var(--card-dark)] border border-[var(--border-light)] dark:border-[var(--border-dark)] flex items-center justify-center font-bold text-xs">
+                        {{ post.author.initials }}
+                    </div>
+                    <span>{{ post.author.name }}</span>
+                </div>
+                <span>•</span>
+                <time>{{ post.date }}</time>
+                <span>•</span>
+                <span>{{ post.readTime }}</span>
+            </div>
+        </header>
+
+        <!-- Main Content Area with prose styles -->
+        <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-p:leading-relaxed"
+            [innerHTML]="post.content">
+        </div>
+
+        <!-- Tags -->
+        <div class="mt-8 pt-6 border-t border-[var(--border-light)] dark:border-[var(--border-dark)]">
+            <div class="flex flex-wrap gap-2">
+                @for (tag of post.tags; track tag) {
+                <span
+                    class="bg-[var(--card-light)] dark:bg-[var(--card-dark)] border border-[var(--border-light)] dark:border-[var(--border-dark)] text-[var(--muted-light)] dark:text-[var(--muted-dark)] text-xs font-medium px-3 py-1 rounded-full">
+                    {{ tag }}
+                </span>
+                }
+            </div>
+        </div>
+
+        <!-- Like & Interaction Section -->
+        <div
+            class="mt-8 flex items-center justify-between border-y border-[var(--border-light)] dark:border-[var(--border-dark)] py-4">
+            <div class="flex items-center gap-6">
+                <button
+                    class="flex items-center gap-2 text-[var(--muted-light)] dark:text-[var(--muted-dark)] hover:text-red-500 transition-colors group">
+                    <svg class="w-6 h-6 group-hover:fill-current" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                        </path>
+                    </svg>
+                    <span class="font-medium text-sm">{{ post.likes }} Likes</span>
+                </button>
+                <a href="#comments"
+                    class="flex items-center gap-2 text-[var(--muted-light)] dark:text-[var(--muted-dark)] hover:text-[var(--accent-color)] transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                        </path>
+                    </svg>
+                    <span class="font-medium text-sm">Comments</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-2 text-[var(--muted-light)] dark:text-[var(--muted-dark)]">
+                <button class="hover:text-[var(--text-light)] dark:hover:text-[var(--text-dark)] transition-colors"
+                    aria-label="Share on Twitter">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                    </svg>
+                </button>
+                <button class="hover:text-[var(--text-light)] dark:hover:text-[var(--text-dark)] transition-colors"
+                    aria-label="Share Link">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Author Bio -->
+        <div
+            class="mt-8 p-6 bg-[var(--card-light)] dark:bg-[var(--card-dark)] rounded-2xl border border-[var(--border-light)] dark:border-[var(--border-dark)] flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gray-700 to-black flex-shrink-0"></div>
+            <div>
+                <h3 class="text-lg font-bold mb-2">Written by {{ post.author.name }}</h3>
+                <p class="text-[var(--muted-light)] dark:text-[var(--muted-dark)] text-sm mb-4">
+                    {{ post.author.bio }}
+                </p>
+                @if (post.author.twitterUrl) {
+                <a [href]="post.author.twitterUrl" target="_blank" rel="noopener"
+                    class="text-sm font-medium text-[var(--accent-color)] hover:text-[var(--accent-hover)]">
+                    Follow on Twitter →
+                </a>
+                }
+            </div>
+        </div>
+
+        <!-- Read Next / Related Articles -->
+        @if (relatedPosts.length > 0) {
+        <div class="my-12 border-t border-[var(--border-light)] dark:border-[var(--border-dark)] pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold">Read Next</h3>
+                <a routerLink="/blog"
+                    class="text-sm font-medium text-[var(--accent-color)] hover:text-[var(--accent-hover)]">
+                    View all posts →
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @for (related of relatedPosts; track related.id) {
+                <a [routerLink]="'/blog/' + related.slug"
+                    class="group flex flex-col h-full p-6 rounded-xl border border-[var(--border-light)] dark:border-[var(--border-dark)] bg-[var(--card-light)] dark:bg-[var(--card-dark)] hover:border-[var(--accent-color)]/30 hover:shadow-lg hover:shadow-[var(--accent-color)]/5 transition-all duration-300">
+                    <div class="mb-3">
+                        <span
+                            [class]="'text-xs font-bold uppercase tracking-wider ' + getCategoryColorClass(related.categoryColor)">
+                            {{ related.category }}
+                        </span>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 group-hover:text-[var(--accent-color)] transition-colors">
+                        {{ related.title }}
+                    </h4>
+                    <p
+                        class="text-sm text-[var(--muted-light)] dark:text-[var(--muted-dark)] leading-relaxed mb-4 flex-grow">
+                        {{ related.excerpt }}
+                    </p>
+                    <div
+                        class="flex items-center text-xs text-[var(--muted-light)] dark:text-[var(--muted-dark)] mt-auto">
+                        <span>{{ related.date }}</span>
+                    </div>
+                </a>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- Comments Section -->
+        <section id="comments" class="mt-12 mb-20">
+            <h3 class="text-2xl font-bold mb-8">Comments ({{ comments.length }})</h3>
+
+            <!-- Comment Form -->
+            <form class="mb-12">
+                <div class="flex items-start gap-4 mb-4">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-tr from-[var(--accent-color)] to-[var(--accent-hover)] p-[2px] flex-shrink-0">
+                        <div
+                            class="w-full h-full rounded-full bg-[var(--card-light)] dark:bg-[var(--card-dark)] overflow-hidden">
+                            <img src="https://ui-avatars.com/api/?name=Guest+User&background=random&color=fff"
+                                alt="User" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="text-xs text-[var(--muted-light)] dark:text-[var(--muted-dark)] mb-1">
+                            Posting as <span class="font-bold">Guest User</span>
+                        </div>
+                        <div class="relative">
+                            <textarea
+                                class="w-full bg-[var(--card-light)] dark:bg-[var(--card-dark)] border border-[var(--border-light)] dark:border-[var(--border-dark)] rounded-xl p-4 focus:ring-2 focus:ring-[var(--accent-color)] focus:border-transparent outline-none transition-all resize-none"
+                                rows="3" placeholder="What are your thoughts on this?"></textarea>
+                            <div class="absolute bottom-3 right-3">
+                                <button type="button"
+                                    class="bg-[var(--accent-color)] hover:bg-[var(--accent-hover)] text-white text-sm px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-[var(--accent-color)]/20">
+                                    Post
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Comment List -->
+            <div class="space-y-8">
+                @for (comment of comments; track comment.id) {
+                <div class="flex gap-4 group">
+                    <div
+                        [class]="'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ' + getCommentColorClass(comment.authorColor)">
+                        {{ comment.authorInitials }}
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-sm">{{ comment.authorName }}</span>
+                                <span class="text-xs text-[var(--muted-light)] dark:text-[var(--muted-dark)]">• {{
+                                    comment.timestamp }}</span>
+                            </div>
+                        </div>
+                        <p class="text-[var(--muted-light)] dark:text-[var(--muted-dark)] text-sm leading-relaxed mb-2">
+                            {{ comment.content }}
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <button
+                                class="text-xs text-[var(--muted-light)] dark:text-[var(--muted-dark)] hover:text-[var(--accent-color)] font-medium flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5">
+                                    </path>
+                                </svg>
+                                Helpful ({{ comment.helpfulCount }})
+                            </button>
+                            <button
+                                class="text-xs text-[var(--muted-light)] dark:text-[var(--muted-dark)] hover:text-[var(--text-light)] dark:hover:text-[var(--text-dark)] font-medium">
+                                Reply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </section>
+
+    </article>
+</div>
+}

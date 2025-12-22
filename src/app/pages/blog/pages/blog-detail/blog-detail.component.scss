@@ -1,0 +1,116 @@
+/* Blog Detail Page Styles */
+
+.blog-page {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fade-in animation */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Prose typography overrides for blog content */
+:host ::ng-deep .prose {
+    h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    p {
+        margin-bottom: 1rem;
+        color: var(--muted-dark);
+    }
+
+    strong {
+        color: var(--text-dark);
+    }
+
+    code {
+        color: var(--accent-color);
+        background-color: var(--card-dark);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.875em;
+    }
+
+    pre {
+        background-color: var(--card-dark);
+        border: 1px solid var(--border-dark);
+        border-radius: 12px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+
+        code {
+            background: none;
+            padding: 0;
+            color: var(--text-dark);
+        }
+    }
+
+    ul,
+    ol {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--muted-dark);
+        }
+    }
+
+    a {
+        color: var(--accent-color);
+        text-decoration: none;
+
+        &:hover {
+            color: var(--accent-hover);
+        }
+    }
+}
+
+/* Light mode prose adjustments */
+:host-context(body.light) ::ng-deep .prose {
+
+    p,
+    li {
+        color: var(--muted-light);
+    }
+
+    strong {
+        color: var(--text-light);
+    }
+
+    pre {
+        background-color: var(--card-light);
+        border-color: var(--border-light);
+
+        code {
+            color: var(--text-light);
+        }
+    }
+
+    code {
+        background-color: var(--card-light);
+    }
+}

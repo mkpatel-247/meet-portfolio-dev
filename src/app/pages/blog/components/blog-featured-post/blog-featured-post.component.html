@@ -3,7 +3,7 @@
         <h2 class="text-2xl font-semibold tracking-tight transition-colors duration-300">Featured</h2>
     </div>
 
-    <a [href]="'/blog/' + post.slug"
+    <a [routerLink]="'/blog/' + post.slug"
         class="group block relative rounded-2xl border border-[var(--border-light)] dark:border-[var(--border-dark)] bg-[var(--card-light)] dark:bg-[var(--card-dark)] overflow-hidden hover:border-[var(--accent-color)] hover:shadow-[0_0_15px_rgba(255,140,0,0.1)] transition-all duration-300">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
             <!-- Content Side -->

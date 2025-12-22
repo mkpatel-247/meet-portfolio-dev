@@ -10,8 +10,16 @@ export const routes: Routes = [
     {
         path: 'blog',
         loadComponent: () =>
-            import('./pages/blog/blog-landing.component').then(
+            import('./pages/blog/pages/blog-landing/blog-landing.component').then(
                 (m) => m.BlogLandingComponent
+            ),
+        title: 'Blog | Meet Patel',
+    },
+    {
+        path: 'blog/:slug',
+        loadComponent: () =>
+            import('./pages/blog/pages/blog-detail/blog-detail.component').then(
+                (m) => m.BlogDetailComponent
             ),
         title: 'Blog | Meet Patel',
     },
