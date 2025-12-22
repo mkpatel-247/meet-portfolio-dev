@@ -7,18 +7,6 @@
   <div class="grid-pattern"></div>
 </div>
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-  <app-hero></app-hero>
-  <app-about></app-about>
-  <app-skills></app-skills>
-  <app-experience></app-experience>
-  @defer (on viewport) {
-  <app-github-stats></app-github-stats>
-  } @placeholder {
-  <div class="min-h-[400px] flex items-center justify-center">
-    <div class="text-muted">Loading GitHub stats...</div>
-  </div>
-  }
   <router-outlet></router-outlet>
-  <app-contact></app-contact>
 </main>
 <app-footer></app-footer>

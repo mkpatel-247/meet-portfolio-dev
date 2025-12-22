@@ -1,0 +1,27 @@
+<article class="group cursor-pointer">
+    <a [href]="'/blog/' + article.slug"
+        class="h-full p-6 rounded-xl border border-[var(--border-light)] dark:border-[var(--border-dark)] bg-[var(--card-light)] dark:bg-[var(--card-dark)] hover:bg-[var(--card-light-hover)] dark:hover:bg-[var(--card-dark-hover)] hover:border-[var(--accent-color)]/30 transition-all duration-300 flex flex-col block">
+
+        <!-- Category -->
+        <div class="mb-4">
+            <span [class]="'text-xs font-medium ' + getCategoryColorClass()">
+                {{ article.category }}
+            </span>
+        </div>
+
+        <!-- Title -->
+        <h3 class="text-xl font-bold mb-3 group-hover:text-[var(--accent-color)] transition-colors">
+            {{ article.title }}
+        </h3>
+
+        <!-- Excerpt -->
+        <p class="text-sm text-[var(--muted-light)] dark:text-[var(--muted-dark)] leading-relaxed mb-4 flex-grow">
+            {{ article.excerpt }}
+        </p>
+
+        <!-- Date -->
+        <div class="text-xs text-[var(--muted-light)] dark:text-[var(--muted-dark)] mt-auto">
+            {{ article.date }}
+        </div>
+    </a>
+</article>

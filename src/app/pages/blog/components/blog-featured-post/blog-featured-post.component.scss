@@ -1,0 +1,14 @@
+/* Blog Featured Post Styles */
+
+.featured-visual {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center,
+                transparent 0%,
+                rgba(0, 0, 0, 0.1) 100%);
+    }
+}

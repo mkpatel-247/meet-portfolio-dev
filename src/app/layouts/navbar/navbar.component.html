@@ -14,10 +14,17 @@
     <!-- Navigation Links -->
     <nav class="hidden items-center gap-6 md:flex md:gap-8">
       @for(route of navbarRoute; track $index) {
+      @if (route.isRouterLink) {
+      <a [routerLink]="route.route"
+        class="nav-link-underline group relative cursor-pointer overflow-hidden py-1.5 text-[0.8125rem] font-medium text-white/85 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:text-orange-500 active:translate-y-0">
+        {{route.label}}
+      </a>
+      } @else {
       <a (click)="smoothScrollTo(route.route, $event)"
         class="nav-link-underline group relative cursor-pointer overflow-hidden py-1.5 text-[0.8125rem] font-medium text-white/85 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:text-orange-500 active:translate-y-0">
         {{route.label}}
       </a>
+      }
       }
     </nav>
 
@@ -87,6 +94,10 @@
       <a (click)="smoothScrollTo('#work', $event)"
         class="mobile-menu-link-shimmer relative w-full max-w-[280px] min-w-[180px] cursor-pointer overflow-hidden rounded-xl border border-white/20 bg-white/12 px-5 py-3 text-center text-base font-semibold text-white/95 backdrop-blur-[10px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:-translate-y-0.5 hover:border-orange-500/40 hover:bg-orange-500/20 hover:text-orange-500 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] active:scale-100 active:translate-y-0 sm:px-7 sm:py-3.5 sm:text-lg">
         Work
+      </a>
+      <a routerLink="/blog" (click)="closeMobileMenu()"
+        class="mobile-menu-link-shimmer relative w-full max-w-[280px] min-w-[180px] cursor-pointer overflow-hidden rounded-xl border border-white/20 bg-white/12 px-5 py-3 text-center text-base font-semibold text-white/95 backdrop-blur-[10px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:-translate-y-0.5 hover:border-orange-500/40 hover:bg-orange-500/20 hover:text-orange-500 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] active:scale-100 active:translate-y-0 sm:px-7 sm:py-3.5 sm:text-lg">
+        Blog
       </a>
       <!-- <a (click)="smoothScrollTo('#projects', $event)"
         class="mobile-menu-link-shimmer relative w-full max-w-[280px] min-w-[180px] cursor-pointer overflow-hidden rounded-xl border border-white/20 bg-white/12 px-5 py-3 text-center text-base font-semibold text-white/95 backdrop-blur-[10px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:-translate-y-0.5 hover:border-orange-500/40 hover:bg-orange-500/20 hover:text-orange-500 hover:shadow-[0_8px_20px_rgba(255,140,0,0.3)] active:scale-100 active:translate-y-0 sm:px-7 sm:py-3.5 sm:text-lg">

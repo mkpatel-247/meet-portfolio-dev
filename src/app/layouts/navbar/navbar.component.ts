@@ -10,17 +10,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ThemeService } from '../../core/services/theme.service';
 
 interface NavbarRoute {
   label: string;
   route: string;
+  isRouterLink?: boolean;
 }
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -215,6 +217,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       {
         label: 'Work',
         route: '#work',
+      },
+      {
+        label: 'Blog',
+        route: '/blog',
+        isRouterLink: true,
       },
       {
         label: 'Contact',
