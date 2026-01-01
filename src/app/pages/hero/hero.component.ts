@@ -18,7 +18,7 @@ interface IFloatIcons {
   selector: 'app-hero',
   imports: [CommonModule],
   templateUrl: './hero.component.html',
-  styleUrl: './hero.component.scsss',
+  styleUrl: './hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeroComponent implements OnInit {
