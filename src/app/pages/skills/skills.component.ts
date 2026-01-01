@@ -5,11 +5,10 @@ import { SectionTitleComponent } from '../../shared/components/section-title/sec
 
 @Component({
   selector: 'app-skills',
-  standalone: true,
   imports: [CommonModule, CursorHoverDirective, SectionTitleComponent],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillsComponent {
   skillCategories = [

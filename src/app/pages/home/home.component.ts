@@ -8,7 +8,6 @@ import { ContactComponent } from '../contact/contact.component';
 
 @Component({
     selector: 'app-home',
-    standalone: true,
     imports: [
         HeroComponent,
         AboutComponent,
@@ -19,6 +18,6 @@ import { ContactComponent } from '../contact/contact.component';
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent { }

@@ -10,11 +10,10 @@ import {
 
 @Component({
     selector: 'app-blog-detail',
-    standalone: true,
     imports: [CommonModule, RouterLink],
     templateUrl: './blog-detail.component.html',
     styleUrl: './blog-detail.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogDetailComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);

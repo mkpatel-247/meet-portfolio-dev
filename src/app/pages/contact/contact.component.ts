@@ -15,11 +15,10 @@ import { CursorService } from '../../core/services/cursor.service';
 
 @Component({
   selector: 'app-contact',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactComponent {
   private fb = inject(FormBuilder);

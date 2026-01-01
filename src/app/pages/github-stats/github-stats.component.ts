@@ -18,11 +18,10 @@ import { SectionTitleComponent } from '../../shared/components/section-title/sec
 
 @Component({
   selector: 'app-github-stats',
-  standalone: true,
   imports: [CommonModule, CursorHoverDirective, SectionTitleComponent],
   templateUrl: './github-stats.component.html',
   styleUrl: './github-stats.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GitHubStatsComponent implements OnInit {
   private readonly githubStatsService = inject(GitHubStatsService);

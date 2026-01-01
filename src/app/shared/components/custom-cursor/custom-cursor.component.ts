@@ -15,7 +15,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-custom-cursor',
-  standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -36,7 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     </div>
     }
   `,
-  styleUrls: ['./custom-cursor.component.scss'],
+  styleUrls: ['./custom-cursor.component.scss']
 })
 export class CustomCursorComponent implements OnInit {
   x = 0;

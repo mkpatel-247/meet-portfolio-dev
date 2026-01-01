@@ -5,11 +5,10 @@ import { SectionTitleComponent } from '../../shared/components/section-title/sec
 
 @Component({
   selector: 'app-experience',
-  standalone: true,
   imports: [CommonModule, SectionTitleComponent],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExperienceComponent {
   experienceDetails: IExperienceDetails[] = [

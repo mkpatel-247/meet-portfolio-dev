@@ -12,10 +12,9 @@ import { LoaderService } from '../../services/loader.service';
  * - Reactive to LoaderService state via signals
  */
 @Component({
-    selector: 'app-loader',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+  selector: 'app-loader',
+  imports: [CommonModule],
+  template: `
     @if (loaderService.isLoading()) {
       <div class="loader-overlay" role="status" aria-live="polite" aria-label="Loading">
         <div class="loader-container">
@@ -29,9 +28,9 @@ import { LoaderService } from '../../services/loader.service';
       </div>
     }
   `,
-    styleUrl: './loader.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './loader.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoaderComponent {
-    readonly loaderService = inject(LoaderService);
+  readonly loaderService = inject(LoaderService);
 }

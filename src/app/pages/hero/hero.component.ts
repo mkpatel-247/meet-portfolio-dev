@@ -16,11 +16,10 @@ interface IFloatIcons {
 
 @Component({
   selector: 'app-hero',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './hero.component.html',
-  styleUrl: './hero.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './hero.component.scsss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeroComponent implements OnInit {
   readonly isBrowser: boolean;

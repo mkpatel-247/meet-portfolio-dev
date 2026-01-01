@@ -5,11 +5,10 @@ import { BlogArticle } from '../../models/blog.models';
 
 @Component({
     selector: 'app-blog-article-card',
-    standalone: true,
     imports: [CommonModule, RouterLink],
     templateUrl: './blog-article-card.component.html',
     styleUrl: './blog-article-card.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogArticleCardComponent {
     @Input({ required: true }) article!: BlogArticle;

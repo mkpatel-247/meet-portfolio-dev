@@ -8,7 +8,6 @@ import { BlogArticle, FeaturedPost } from '../../models/blog.models';
 
 @Component({
     selector: 'app-blog-landing',
-    standalone: true,
     imports: [
         CommonModule,
         BlogHeroComponent,
@@ -17,7 +16,7 @@ import { BlogArticle, FeaturedPost } from '../../models/blog.models';
     ],
     templateUrl: './blog-landing.component.html',
     styleUrl: './blog-landing.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogLandingComponent implements OnInit {
     private readonly blogService = inject(BlogService);
