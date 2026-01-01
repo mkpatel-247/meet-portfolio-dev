@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CursorHoverDirective } from '../../shared/directives/cursor-hover.directive';
 import { SectionTitleComponent } from '../../shared/components/section-title/section-title.component';
 
 @Component({
   selector: 'app-skills',
-  imports: [CommonModule, CursorHoverDirective, SectionTitleComponent],
+  imports: [CursorHoverDirective, SectionTitleComponent],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

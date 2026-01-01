@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   OnInit,
@@ -18,7 +18,7 @@ import { SectionTitleComponent } from '../../shared/components/section-title/sec
 
 @Component({
   selector: 'app-github-stats',
-  imports: [CommonModule, CursorHoverDirective, SectionTitleComponent],
+  imports: [CursorHoverDirective, SectionTitleComponent],
   templateUrl: './github-stats.component.html',
   styleUrl: './github-stats.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

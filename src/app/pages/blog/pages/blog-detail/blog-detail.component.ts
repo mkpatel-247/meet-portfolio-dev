@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
 import {
@@ -10,7 +10,7 @@ import {
 
 @Component({
     selector: 'app-blog-detail',
-    imports: [CommonModule, RouterLink],
+    imports: [RouterLink],
     templateUrl: './blog-detail.component.html',
     styleUrl: './blog-detail.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

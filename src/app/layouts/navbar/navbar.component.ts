@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -22,7 +22,7 @@ interface NavbarRoute {
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -197,7 +197,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     // Close mobile menu on resize to desktop
     if (this.isBrowser && window.innerWidth >= 768 && this.isMobileMenuOpen) {

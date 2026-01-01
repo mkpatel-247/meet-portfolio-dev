@@ -1,5 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LoaderService } from '../../services/loader.service';
 
 /**
@@ -13,7 +13,7 @@ import { LoaderService } from '../../services/loader.service';
  */
 @Component({
   selector: 'app-loader',
-  imports: [CommonModule],
+  imports: [],
   template: `
     @if (loaderService.isLoading()) {
       <div class="loader-overlay" role="status" aria-live="polite" aria-label="Loading">

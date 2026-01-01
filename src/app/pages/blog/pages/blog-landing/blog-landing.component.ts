@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BlogHeroComponent } from '../../components/blog-hero/blog-hero.component';
 import { BlogFeaturedPostComponent } from '../../components/blog-featured-post/blog-featured-post.component';
 import { BlogArticleCardComponent } from '../../components/blog-article-card/blog-article-card.component';
@@ -9,10 +9,9 @@ import { BlogArticle, FeaturedPost } from '../../models/blog.models';
 @Component({
     selector: 'app-blog-landing',
     imports: [
-        CommonModule,
         BlogHeroComponent,
         BlogFeaturedPostComponent,
-        BlogArticleCardComponent,
+        BlogArticleCardComponent
     ],
     templateUrl: './blog-landing.component.html',
     styleUrl: './blog-landing.component.scss',

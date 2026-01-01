@@ -1,11 +1,11 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { BlogArticle } from '../../models/blog.models';
 
 @Component({
     selector: 'app-blog-article-card',
-    imports: [CommonModule, RouterLink],
+    imports: [RouterLink],
     templateUrl: './blog-article-card.component.html',
     styleUrl: './blog-article-card.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

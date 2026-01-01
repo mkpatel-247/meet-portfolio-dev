@@ -4,7 +4,7 @@ import {
   inject,
   PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -15,7 +15,7 @@ import { CursorService } from '../../core/services/cursor.service';
 
 @Component({
   selector: 'app-contact',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

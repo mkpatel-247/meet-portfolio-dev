@@ -5,7 +5,7 @@ import {
   inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../../core/services/cursor.service';
 
 interface IFloatIcons {
@@ -16,7 +16,7 @@ interface IFloatIcons {
 
 @Component({
   selector: 'app-hero',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
