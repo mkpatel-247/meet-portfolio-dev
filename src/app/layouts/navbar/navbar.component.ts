@@ -240,11 +240,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         route: '#work',
       },
       {
-        label: 'Blog',
-        route: '/blog',
-        isRouterLink: true,
-      },
-      {
         label: 'Contact',
         route: '#contact',
       },

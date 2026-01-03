@@ -74,6 +74,20 @@ export class GitHubStatsComponent implements OnInit {
       });
   }
 
+  /**
+   * Get the date from one year ago for display in tooltip
+   */
+  getOneYearAgoDate(): string {
+    const now = new Date();
+    const oneYearAgo = new Date(now);
+    oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+    return oneYearAgo.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }
+
   formatNumber(num: number): string {
     if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'k';
@@ -112,6 +126,7 @@ export class GitHubStatsComponent implements OnInit {
 
   /**
    * Get contribution graph organized by weeks
+   * Shows only the exact 365 days without padding at the end
    */
   getContributionWeeks(): Array<
     Array<{ date: string; count: number; level: number }>
@@ -124,56 +139,24 @@ export class GitHubStatsComponent implements OnInit {
     const weeks: Array<Array<{ date: string; count: number; level: number }>> =
       [];
     let currentWeek: Array<{ date: string; count: number; level: number }> = [];
-
-    // Get the first day's day of week (0 = Sunday, 6 = Saturday)
-    const firstDate = new Date(days[0].date);
-
-    const firstDayOfWeek = firstDate.getDay();
-
-    // Add empty days at the beginning if the first day is not Sunday
-    for (let i = 0; i < firstDayOfWeek; i++) {
-      currentWeek.push({
-        date: '',
-        count: 0,
-        level: 0,
-      });
-    }
-
-    days.forEach((day) => {
+    // Process days without adding padding at the beginning
+    days.forEach((day, index) => {
       const date = new Date(day.date);
       const dayOfWeek = date.getDay();
 
-      // If it's Sunday and we have a week, start a new week
-      if (dayOfWeek === 0 && currentWeek.length > 0) {
-        weeks.push([...currentWeek]);
-        currentWeek = [];
-      }
-
+      // Add the current day to the current week
       currentWeek.push({
         date: day.date,
         count: day.count,
         level: day.level,
       });
 
-      // If it's Saturday, we've completed a week
-      if (dayOfWeek === 6) {
+      // If it's Saturday (end of week) or the last day, push the week
+      if (dayOfWeek === 6 || index === days.length - 1) {
         weeks.push([...currentWeek]);
         currentWeek = [];
       }
     });
-
-    // Add the last incomplete week if it exists
-    if (currentWeek.length > 0) {
-      // Fill remaining days with empty entries
-      while (currentWeek.length < 7) {
-        currentWeek.push({
-          date: '',
-          count: 0,
-          level: 0,
-        });
-      }
-      weeks.push(currentWeek);
-    }
 
     return weeks;
   }
