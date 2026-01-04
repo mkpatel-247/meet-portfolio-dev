@@ -4,11 +4,10 @@ import { SectionTitleComponent } from '../../shared/components/section-title/sec
 
 @Component({
   selector: 'app-about',
-  standalone: true,
   imports: [CursorHoverDirective, SectionTitleComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutComponent {
   aboutMe = [

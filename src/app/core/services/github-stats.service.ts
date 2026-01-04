@@ -21,22 +21,22 @@ export class GitHubStatsService {
   /**
    * Fetch GitHub user statistics
    * @param username GitHub username
+   * @param year Optional year to filter contributions (null for last 365 days)
    * @throws Error if username is invalid or API request fails
    */
-  getGitHubStats(username: string): Observable<IGitHubStats> {
+  getGitHubStats(username: string, year: number | null = null): Observable<IGitHubStats> {
     if (!username || username.trim() === '') {
       return new Observable((observer) => {
         observer.error(new Error('GitHub username is required'));
       });
     }
-
     return forkJoin({
       user: this.getUser(username),
       repos: this.getRepos(username),
       pullRequests: this.getPullRequests(username).pipe(
         catchError(() => of([]))
       ),
-      contributionStats: this.getContributionStats(username).pipe(
+      contributionStats: this.getContributionStats(username, year).pipe(
         catchError(() => of(undefined))
       ),
     }).pipe(
@@ -89,8 +89,8 @@ export class GitHubStatsService {
           error?.status === 404
             ? `User "${username}" not found`
             : error?.error?.message ||
-              error?.message ||
-              'Failed to fetch user information';
+            error?.message ||
+            'Failed to fetch user information';
         throw new Error(errorMessage);
       })
     );
@@ -132,107 +132,117 @@ export class GitHubStatsService {
   /**
    * Fetch contribution stats using github-contributions-api
    * API: https://github-contributions-api.jogruber.de
+   * @param username GitHub username
+   * @param year Optional year to filter (null for last 365 days)
    */
   private getContributionStats(
-    username: string
+    username: string,
+    year: number | null = null
   ): Observable<IContributionStats> {
     const currentYear = new Date().getFullYear();
-    const previousYear = currentYear - 1;
     const contributionsApiUrl =
       'https://github-contributions-api.jogruber.de/v4';
 
-    // Fetch both current and previous year to get full year of data
+    // Determine which years to fetch based on year parameter
     type ContributionResponse = {
       total: { [year: string]: number };
       contributions: Array<{ date: string; count: number; level: number }>;
     };
 
-    return forkJoin({
-      currentYearData: this.http
+    if (year !== null) {
+      // Fetch specific year data
+      return this.http
         .get<ContributionResponse>(
-          `${contributionsApiUrl}/${username}?y=${currentYear}`
+          `${contributionsApiUrl}/${username}?y=${year}`
         )
         .pipe(
           catchError(() =>
             of<ContributionResponse>({ total: {}, contributions: [] })
-          )
-        ),
-      previousYearData: this.http
-        .get<ContributionResponse>(
-          `${contributionsApiUrl}/${username}?y=${previousYear}`
-        )
-        .pipe(
-          catchError(() =>
-            of<ContributionResponse>({ total: {}, contributions: [] })
-          )
-        ),
-    }).pipe(
-      map(({ currentYearData, previousYearData }) => {
-        // Combine contributions from both years, but prioritize current year
-        // Filter to get only the last 365 days
-        const now = new Date();
-        const oneYearAgo = new Date(now);
-        oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+          ),
+          map((yearData) => {
+            // Filter contributions to the selected year only
+            const startOfYear = new Date(year, 0, 1);
+            const endOfYear = year === currentYear ? new Date() : new Date(year, 11, 31, 23, 59, 59);
 
-        // Filter to last 365 days and remove duplicates (keep current year data)
-        const contributionsByDay: IContributionDay[] = [];
-        const seenDates = new Set<string>();
+            const contributionsByDay: IContributionDay[] = yearData.contributions
+              .filter((day) => {
+                const date = new Date(day.date);
+                return date >= startOfYear && date <= endOfYear;
+              })
+              .map((day) => ({
+                date: day.date,
+                count: day.count,
+                level: day.level,
+              }));
 
-        // Process current year first (to prioritize it)
-        currentYearData.contributions.forEach((day) => {
-          const date = new Date(day.date);
-          if (date >= oneYearAgo && !seenDates.has(day.date)) {
-            contributionsByDay.push({
-              date: day.date,
-              count: day.count,
-              level: day.level,
-            });
-            seenDates.add(day.date);
-          }
-        });
+            // Sort by date
+            contributionsByDay.sort((a, b) => a.date.localeCompare(b.date));
 
-        // Then add previous year data for dates not in current year
-        previousYearData.contributions.forEach((day) => {
-          const date = new Date(day.date);
-          if (date >= oneYearAgo && !seenDates.has(day.date)) {
-            contributionsByDay.push({
-              date: day.date,
-              count: day.count,
-              level: day.level,
-            });
-            seenDates.add(day.date);
-          }
-        });
+            // Calculate streaks
+            const { currentStreak, longestStreak } =
+              this.calculateStreaks(contributionsByDay);
 
-        // Sort by date
-        contributionsByDay.sort((a, b) => a.date.localeCompare(b.date));
+            // Calculate totals for the year
+            const contributionsThisYear = contributionsByDay.reduce(
+              (sum, day) => sum + day.count,
+              0
+            );
 
-        // Calculate streaks
-        const { currentStreak, longestStreak } =
-          this.calculateStreaks(contributionsByDay);
-
-        // Calculate totals
-        const contributionsThisYear = contributionsByDay.reduce(
-          (sum, day) => sum + day.count,
-          0
+            return {
+              totalContributions: yearData.total[String(year)] || contributionsThisYear,
+              currentStreak,
+              longestStreak,
+              contributionsThisYear,
+              contributionsByDay,
+            };
+          })
         );
-        const totalContributions =
-          (currentYearData.total[String(currentYear)] || 0) +
-          (previousYearData.total[String(previousYear)] || 0);
+    }
 
-        return {
-          totalContributions,
-          currentStreak,
-          longestStreak,
-          contributionsThisYear,
-          contributionsByDay,
-        };
-      }),
-      catchError((error) => {
-        console.error('Error fetching contribution stats:', error);
-        throw error;
-      })
-    );
+    // Default: Fetch last 365 days using 'y=last' parameter
+    return this.http
+      .get<ContributionResponse>(
+        `${contributionsApiUrl}/${username}?y=last`
+      )
+      .pipe(
+        catchError(() =>
+          of<ContributionResponse>({ total: {}, contributions: [] })
+        ),
+        map((data) => {
+          const contributionsByDay: IContributionDay[] = data.contributions.map(
+            (day) => ({
+              date: day.date,
+              count: day.count,
+              level: day.level,
+            })
+          );
+
+          // Sort by date
+          contributionsByDay.sort((a, b) => a.date.localeCompare(b.date));
+
+          // Calculate streaks
+          const { currentStreak, longestStreak } =
+            this.calculateStreaks(contributionsByDay);
+
+          // Calculate totals
+          const contributionsThisYear = contributionsByDay.reduce(
+            (sum, day) => sum + day.count,
+            0
+          );
+
+          return {
+            totalContributions: contributionsThisYear,
+            currentStreak,
+            longestStreak,
+            contributionsThisYear,
+            contributionsByDay,
+          };
+        }),
+        catchError((error) => {
+          console.error('Error fetching contribution stats:', error);
+          throw error;
+        })
+      );
   }
 
   /**

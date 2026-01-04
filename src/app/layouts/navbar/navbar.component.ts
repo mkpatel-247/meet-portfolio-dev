@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -10,20 +10,22 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { ThemeService } from '../../core/services/theme.service';
+import { LoaderService } from '../../shared/services/loader.service';
 
 interface NavbarRoute {
   label: string;
   route: string;
+  isRouterLink?: boolean;
 }
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   systemTheme = 'light';
@@ -37,8 +39,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private readonly themeService = inject(ThemeService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
 
-  constructor() {
+  constructor(private loaderService: LoaderService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -149,17 +152,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     const element = document.querySelector(target);
+
     if (element && this.isBrowser) {
-      // Close mobile menu first if open
+      // Element exists in DOM - scroll to it
       if (this.isMobileMenuOpen) {
         this.closeMobileMenu();
-        // Small delay to allow menu to close before scrolling
         setTimeout(() => {
           this.performScroll(element);
         }, 100);
       } else {
         this.performScroll(element);
       }
+    } else if (this.isBrowser) {
+      // Element not in DOM (e.g., on blog page) - navigate to home with fragment
+      const fragment = target.replace('#', '');
+
+      // Close mobile menu first if open
+      if (this.isMobileMenuOpen) {
+        this.closeMobileMenu();
+      }
+      this.loaderService.show();
+      // Navigate to home page with fragment
+      this.router.navigate(['/'], { fragment }).then(() => {
+        // After navigation, wait for DOM to update and scroll
+        setTimeout(() => {
+          const targetElement = document.querySelector(target);
+          if (targetElement) {
+            this.performScroll(targetElement);
+            this.loaderService.hide();
+          }
+        }, 100);
+      });
     }
   }
 
@@ -174,7 +197,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     // Close mobile menu on resize to desktop
     if (this.isBrowser && window.innerWidth >= 768 && this.isMobileMenuOpen) {

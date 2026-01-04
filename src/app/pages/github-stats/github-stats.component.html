@@ -67,7 +67,11 @@
             </div>
             <div class="graph-header-right">
               <div class="contribution-badge">
-                {{ formatNumber(stats.contributionStats.contributionsThisYear) }} Contributions
+                <div class="badge-content">
+                  <span class="badge-count">{{ formatNumber(stats.contributionStats.contributionsThisYear) }}
+                    Contributions</span>
+                  <span class="badge-date-range">{{ getOneYearAgoDate() }} - Today</span>
+                </div>
               </div>
               <div class="graph-legend">
                 <span class="legend-label">Less</span>
@@ -96,7 +100,7 @@
             </div>
             <div class="month-labels">
               @for (monthLabel of getMonthLabels(); track monthLabel.label + monthLabel.position) {
-              <span class="month-label" [style.left.px]="monthLabel.position * 15">{{ monthLabel.label }}</span>
+              <span class="month-label" [style.left.px]="monthLabel.position * 17">{{ monthLabel.label }}</span>
               }
             </div>
           </div>

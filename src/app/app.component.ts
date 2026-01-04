@@ -10,36 +10,25 @@ import {
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
-import { HeroComponent } from './pages/hero/hero.component';
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
-import { AboutComponent } from './pages/about/about.component';
-import { SkillsComponent } from './pages/skills/skills.component';
-import { ExperienceComponent } from './pages/experience/experience.component';
-import { ContactComponent } from './pages/contact/contact.component';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
-import { GitHubStatsComponent } from './pages/github-stats/github-stats.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     NavbarComponent,
     FooterComponent,
-    HeroComponent,
-    AboutComponent,
-    SkillsComponent,
-    ExperienceComponent,
-    GitHubStatsComponent,
-    ContactComponent,
     CustomCursorComponent,
+    LoaderComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, AfterViewInit {
   readonly title = 'meet-portfolio';

@@ -8,15 +8,14 @@ import {
   inject,
   DestroyRef,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../../../core/services/cursor.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-custom-cursor',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (isVisible) {
@@ -36,7 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     </div>
     }
   `,
-  styleUrls: ['./custom-cursor.component.scss'],
+  styleUrls: ['./custom-cursor.component.scss']
 })
 export class CustomCursorComponent implements OnInit {
   x = 0;

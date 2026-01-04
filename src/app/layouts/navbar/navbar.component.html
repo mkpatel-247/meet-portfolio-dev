@@ -5,7 +5,7 @@
     class="flex items-center justify-between rounded-xl border border-white/15 bg-black/50 px-4 py-2 shadow-[0_4px_24px_0_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.08)_inset] backdrop-blur-[24px] backdrop-saturate-[180%] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-orange-500/40 hover:shadow-[0_6px_32px_0_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.12)_inset] md:px-5"
     [class]="isScrolled ? 'py-2' : 'py-2.5 md:py-2.5'">
     <!-- Logo/Name: Meet Patel -->
-    <a (click)="smoothScrollTo('#hero', $event)"
+    <a routerLink="/"
       class="flex cursor-pointer items-center rounded-lg p-0.5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:drop-shadow-[0_0_8px_rgba(255,140,0,0.5)]">
       <img src="../../../assets/images/logo_mp.png" alt="Meet Patel"
         class="h-8 transition-all duration-300 ease-in-out md:h-10" loading="eager" fetchpriority="high">
@@ -14,10 +14,17 @@
     <!-- Navigation Links -->
     <nav class="hidden items-center gap-6 md:flex md:gap-8">
       @for(route of navbarRoute; track $index) {
+      @if (route.isRouterLink) {
+      <a [routerLink]="route.route"
+        class="nav-link-underline group relative cursor-pointer overflow-hidden py-1.5 text-[0.8125rem] font-medium text-white/85 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:text-orange-500 active:translate-y-0">
+        {{route.label}}
+      </a>
+      } @else {
       <a (click)="smoothScrollTo(route.route, $event)"
         class="nav-link-underline group relative cursor-pointer overflow-hidden py-1.5 text-[0.8125rem] font-medium text-white/85 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:text-orange-500 active:translate-y-0">
         {{route.label}}
       </a>
+      }
       }
     </nav>
 
