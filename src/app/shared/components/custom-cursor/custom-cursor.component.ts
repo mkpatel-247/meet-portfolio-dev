@@ -8,35 +8,34 @@ import {
   inject,
   DestroyRef,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { CursorService } from '../../../shared/services/cursor.service';
+import { isPlatformBrowser } from '@angular/common';
+import { CursorService } from '../../../core/services/cursor.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-custom-cursor',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (isVisible) {
-      <div
-        class="custom-cursor"
-        [class.hovering]="isHovering"
-        [class.hover-link]="hoverType === 'link'"
-        [class.hover-button]="hoverType === 'button'"
-        [class.hover-image]="hoverType === 'image'"
-        [class.hover-text]="hoverType === 'text'"
-        [style.left.px]="x"
-        [style.top.px]="y"
-        [style.transform]="transformStyle"
-      >
-        <div class="cursor-dot"></div>
-        <div class="cursor-outline"></div>
-      </div>
+    <div
+      class="custom-cursor"
+      [class.hovering]="isHovering"
+      [class.hover-link]="hoverType === 'link'"
+      [class.hover-button]="hoverType === 'button'"
+      [class.hover-image]="hoverType === 'image'"
+      [class.hover-text]="hoverType === 'text'"
+      [style.left.px]="x"
+      [style.top.px]="y"
+      [style.transform]="transformStyle"
+    >
+      <div class="cursor-dot"></div>
+      <div class="cursor-outline"></div>
+    </div>
     }
   `,
-  styleUrls: ['./custom-cursor.component.scss'],
+  styleUrls: ['./custom-cursor.component.scss']
 })
 export class CustomCursorComponent implements OnInit {
   x = 0;
@@ -45,7 +44,7 @@ export class CustomCursorComponent implements OnInit {
   hoverType?: 'link' | 'button' | 'image' | 'text';
   scale = 1;
   isVisible = false;
-  
+
   get transformStyle(): string {
     return `translate(-50%, -50%) scale(${this.scale})`;
   }
@@ -68,7 +67,7 @@ export class CustomCursorComponent implements OnInit {
 
     // Only show custom cursor on devices with fine pointer (desktop)
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-    
+
     if (!hasFinePointer) {
       return;
     }
