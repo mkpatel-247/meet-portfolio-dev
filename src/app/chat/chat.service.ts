@@ -29,7 +29,7 @@ export class ChatService {
   private http = inject(HttpClient);
   private config: ChatConfig = {
     mode: 'http',
-    endpoint: '/api/chat',
+    endpoint: 'http://localhost:4201/api/chat',
     maxRetries: 3,
     retryDelay: 1000,
     enableLocalStorage: true,
@@ -140,6 +140,7 @@ export class ChatService {
     if (this.config.mode === 'websocket') {
       return this.sendMessageWebSocket(userMessage);
     } else {
+      console.log('Sending message via HTTP');
       return this.sendMessageHttp(userMessage);
     }
   }

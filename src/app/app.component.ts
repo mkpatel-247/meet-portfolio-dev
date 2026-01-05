@@ -16,6 +16,7 @@ import { CustomCursorComponent } from './shared/components/custom-cursor/custom-
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
+import { ChatComponent } from "./chat/chat.component";
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ import { filter } from 'rxjs';
     FooterComponent,
     CustomCursorComponent,
     LoaderComponent,
+    ChatComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
