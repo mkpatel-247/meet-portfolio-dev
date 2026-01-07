@@ -1,9 +1,9 @@
 import {
   Component,
-  OnInit,
   PLATFORM_ID,
   inject,
   ChangeDetectionStrategy,
+  signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CursorService } from '../../core/services/cursor.service';
@@ -19,71 +19,69 @@ interface IFloatIcons {
   imports: [],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroComponent implements OnInit {
-  readonly isBrowser: boolean;
-  private readonly cursorService = inject(CursorService, { optional: true });
-  floatingIconsDetails: IFloatIcons[] | undefined;
-
+export class HeroComponent {
+  // Inject dependencies using inject() function
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly cursorService = inject(CursorService, { optional: true });
 
-  constructor() {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
+  // Use signal for state management
+  protected readonly floatingIconsDetails = signal<IFloatIcons[]>([
+    {
+      class: 'top-[8%] right-[-8%]',
+      name: 'Angular',
+      icon: 'angular',
+    },
+    {
+      class: 'top-1/2 right-[-12%] [animation-delay:-1.5s]',
+      name: 'Docker',
+      icon: 'docker',
+    },
+    {
+      class: 'bottom-[18%] right-[-8%] [animation-delay:-3s]',
+      name: 'Node.js',
+      icon: 'nodejs',
+    },
+    {
+      class: 'top-[18%] left-[-8%] [animation-delay:-4.5s]',
+      name: 'MongoDB',
+      icon: 'mongodb',
+    },
+    {
+      class: 'bottom-[8%] left-[-12%] [animation-delay:-6s]',
+      name: 'TypeScript',
+      icon: 'ts',
+    },
+  ]);
 
-  ngOnInit(): void {
-    // Initialize any animations or effects here
-    this.floatingIcons();
-  }
+  // Readonly platform check
+  protected readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  onHover(type: 'link' | 'button' | 'image' | 'text'): void {
+  /**
+   * Handle hover events for custom cursor service
+   * @param type - Type of element being hovered
+   */
+  protected onHover(type: 'link' | 'button' | 'image' | 'text'): void {
     if (this.isBrowser && this.cursorService) {
-      this.cursorService.setHover(
-        true,
-        type,
-        type === 'button' ? 1.8 : type === 'image' ? 1.5 : 1.3
-      );
+      const scale = type === 'button' ? 1.8 : type === 'image' ? 1.5 : 1.3;
+      this.cursorService.setHover(true, type, scale);
     }
   }
 
-  onLeave(): void {
+  /**
+   * Reset cursor state when hover ends
+   */
+  protected onLeave(): void {
     if (this.isBrowser && this.cursorService) {
       this.cursorService.reset();
     }
   }
 
-  floatingIcons() {
-    this.floatingIconsDetails = [
-      {
-        class: 'top-[8%] right-[-8%]',
-        name: 'Angular',
-        icon: 'angular',
-      },
-      {
-        class: 'top-1/2 right-[-12%] [animation-delay:-1.5s]',
-        name: 'Docker',
-        icon: 'docker',
-      },
-      {
-        class: 'bottom-[18%] right-[-8%] [animation-delay:-3s]',
-        name: 'Node.js',
-        icon: 'nodejs',
-      },
-      {
-        class: 'top-[18%] left-[-8%] [animation-delay:-4.5s] ',
-        name: 'MongoDB',
-        icon: 'mongodb',
-      },
-      {
-        class: 'bottom-[8%] left-[-12%] [animation-delay:-6s]',
-        name: 'TypeScript',
-        icon: 'ts',
-      },
-    ];
-  }
-
-  scrollToNextSection(): void {
+  /**
+   * Smooth scroll to the next section (about or skills)
+   */
+  protected scrollToNextSection(): void {
     if (!this.isBrowser) return;
 
     const aboutSection =
