@@ -52,7 +52,7 @@
 }
 
 /* Light Theme Overrides */
-:host-context(body.light) {
+:host-context(.light) {
   .bento-card {
     background: linear-gradient(
       145deg,

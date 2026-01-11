@@ -44,7 +44,7 @@
 }
 
 // Light theme adjustments
-:host-context(body.light) {
+:host-context(.light) {
   // Navbar container
   header > div {
     background: rgba(255, 255, 255, 0.85);

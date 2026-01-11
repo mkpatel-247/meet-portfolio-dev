@@ -19,3 +19,27 @@ a[href="#work"] {
     z-index: 2;
   }
 }
+
+// Robust Light Theme Overrides
+// Ensures text colors flip correctly even if Tailwind classes have specificity issues
+:host-context(.light) {
+  h1 {
+    span.block {
+      color: rgba(30, 41, 59, 0.9); // text-slate-800/90
+    }
+  }
+
+  // Explicitly specificy color for the "Patel" span which has dark:text-white but relies on inheritance for light
+  h1 span.block span.dark\:text-white {
+    color: inherit;
+  }
+
+  p {
+    color: rgba(30, 41, 59, 0.9); // text-slate-800/90
+  }
+  
+  // Tech stack label
+  span.text-xs {
+    color: rgba(30, 41, 59, 0.5); // dark:text-white/50 -> slate-800/50 approx
+  }
+}
