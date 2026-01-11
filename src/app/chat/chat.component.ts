@@ -14,7 +14,7 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, Subscription, combineLatest } from 'rxjs';
-import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { ChatService } from './chat.service';
 import { Message, ChatConfig, ConnectionStatus } from './chat.types';
 
@@ -48,6 +48,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   connectionStatus: ConnectionStatus = 'disconnected';
   errorMessage?: string;
   shouldAutoScroll = true;
+  unreadCount = 0;
+  private isSending = false; // Flag to prevent duplicate rapid sends
   private subscriptions = new Subscription();
 
   ngOnInit(): void {
@@ -60,7 +62,18 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.chatService.messages$
         .pipe(takeUntil(this.destroy$))
         .subscribe((messages) => {
+          const previousCount = this.messages.length;
           this.messages = messages;
+
+          // Increment unread count if chat is closed and new assistant message arrived
+          if (!this.isOpen && messages.length > previousCount) {
+            const newMessages = messages.slice(previousCount);
+            const hasNewAssistantMessage = newMessages.some(m => m.role === 'assistant');
+            if (hasNewAssistantMessage) {
+              this.unreadCount++;
+            }
+          }
+
           this.cdr.markForCheck();
           if (this.shouldAutoScroll && isPlatformBrowser(this.platformId)) {
             setTimeout(() => this.scrollToBottom(), 100);
@@ -134,25 +147,39 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Send message
+   * Send message with streaming
    */
   sendMessage(): void {
-    if (!this.currentMessage.trim() || this.isProcessing) {
+    // Check if already sending to prevent duplicate calls
+    if (!this.currentMessage.trim() || this.isProcessing || this.isSending) {
       return;
     }
 
     const messageText = this.currentMessage.trim();
     this.currentMessage = '';
+    this.isSending = true;
 
-    this.chatService.sendMessage(messageText).subscribe({
-      next: (message) => {
-        // Message handled via messages$ subscription
-      },
-      error: (error) => {
-        console.error('Error sending message:', error);
-        this.error.emit(error);
-      },
-    });
+    // Track subscription and cleanup properly
+    this.subscriptions.add(
+      this.chatService
+        .sendMessageStream(messageText)
+        .pipe(
+          takeUntil(this.destroy$),
+          finalize(() => {
+            this.isSending = false; // Reset flag when complete/error
+          })
+        )
+        .subscribe({
+          next: (delta: string) => {
+            // Deltas are handled by the service, just log for debugging
+            // The messages$ subscription already updates the UI
+          },
+          error: (error) => {
+            console.error('Error sending message:', error);
+            this.error.emit(error);
+          },
+        })
+    );
   }
 
   /**
@@ -169,15 +196,33 @@ export class ChatComponent implements OnInit, OnDestroy {
    * Retry failed message
    */
   retryMessage(messageId: string): void {
-    this.chatService.retryMessage(messageId).subscribe({
-      next: (message) => {
-        // Message handled via messages$ subscription
-      },
-      error: (error) => {
-        console.error('Error retrying message:', error);
-        this.error.emit(error);
-      },
-    });
+    if (this.isSending) {
+      return; // Prevent retry while sending
+    }
+
+    this.isSending = true;
+
+    // Track subscription and cleanup properly
+    this.subscriptions.add(
+      this.chatService
+        .retryMessage(messageId)
+        .pipe(
+          takeUntil(this.destroy$),
+          finalize(() => {
+            this.isSending = false;
+          })
+        )
+        .subscribe({
+          next: (message) => {
+            // Message handled via messages$ subscription
+            console.log('Retry message sent:', message.id);
+          },
+          error: (error) => {
+            console.error('Error retrying message:', error);
+            this.error.emit(error);
+          },
+        })
+    );
   }
 
   /**
@@ -223,6 +268,7 @@ export class ChatComponent implements OnInit, OnDestroy {
    */
   openChat(): void {
     this.isOpen = true;
+    this.unreadCount = 0; // Reset unread count when opening chat
     this.isOpenChange.emit(true);
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {

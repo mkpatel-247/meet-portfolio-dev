@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, throwError, timer } from 'rxjs';
 import {
@@ -27,9 +28,11 @@ import {
 })
 export class ChatService {
   private http = inject(HttpClient);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
   private config: ChatConfig = {
     mode: 'http',
-    endpoint: 'http://localhost:4201/api/chat',
+    endpoint: 'http://localhost:3000/rag/chat',
     maxRetries: 3,
     retryDelay: 1000,
     enableLocalStorage: true,
@@ -118,10 +121,10 @@ export class ChatService {
     // Rate limiting
     const now = Date.now();
     const timeSinceLastSend = now - this.lastSendTime;
-    if (timeSinceLastSend < this.config.rateLimitDelay!) {
-      const delay = this.config.rateLimitDelay! - timeSinceLastSend;
-      return timer(delay).pipe(switchMap(() => this.sendMessage(text)));
-    }
+    // if (timeSinceLastSend < this.config.rateLimitDelay!) {
+    //   const delay = this.config.rateLimitDelay! - timeSinceLastSend;
+    //   return timer(delay).pipe(switchMap(() => this.sendMessage(text)));
+    // }
     this.lastSendTime = now;
 
     // Create user message
@@ -253,12 +256,20 @@ export class ChatService {
     this.addMessage(assistantMessage);
 
     return new Observable<string>((observer) => {
+      // Create AbortController for timeout and cancellation
+      // const abortController = new AbortController();
+      // const timeoutId = setTimeout(() => {
+      //   abortController.abort();
+      //   observer.error(new Error('Request timeout after 60 seconds'));
+      // }, 60000);
+
       fetch(this.config.endpoint!, {
         method: 'POST',
         headers: Object.fromEntries(
           headers.keys().map((k) => [k, headers.get(k)!])
         ),
         body: JSON.stringify(request),
+        // signal: abortController.signal,
       })
         .then((response) => {
           if (!response.body) {
@@ -286,6 +297,7 @@ export class ChatService {
                   }
                   this.isProcessingSubject.next(false);
                   this.currentRequestId = undefined;
+                  // clearTimeout(timeoutId);
                   observer.complete();
                   return;
                 }
@@ -334,6 +346,7 @@ export class ChatService {
                 readChunk();
               })
               .catch((error) => {
+                // clearTimeout(timeoutId);
                 observer.error(error);
                 this.handleError(error, userMessage);
               });
@@ -342,6 +355,7 @@ export class ChatService {
           readChunk();
         })
         .catch((error) => {
+          // clearTimeout(timeoutId);
           observer.error(error);
           this.handleError(error, userMessage);
         });
@@ -624,7 +638,7 @@ export class ChatService {
    * Load messages from localStorage
    */
   private loadMessagesFromStorage(): void {
-    if (!this.config.enableLocalStorage) {
+    if (!this.config.enableLocalStorage || !this.isBrowser) {
       return;
     }
 
@@ -644,7 +658,7 @@ export class ChatService {
    * Save messages to localStorage
    */
   private saveMessagesToStorage(): void {
-    if (!this.config.enableLocalStorage) {
+    if (!this.config.enableLocalStorage || !this.isBrowser) {
       return;
     }
 

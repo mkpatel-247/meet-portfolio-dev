@@ -81,10 +81,55 @@
   }
 }
 
+/* Notification Badge */
+.chat-notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #ef4444;
+  color: white;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  border: 2px solid var(--card-dark);
+  z-index: 2;
+  animation: badgePop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  body.light & {
+    border-color: white;
+  }
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes chatButtonPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(255, 140, 0, 0.7);
   }
+
   50% {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 8px rgba(255, 140, 0, 0);
   }
@@ -95,6 +140,7 @@
     transform: scale(1);
     opacity: 0.3;
   }
+
   100% {
     transform: scale(1.4);
     opacity: 0;
@@ -127,6 +173,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -205,9 +252,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -358,6 +408,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -511,10 +562,14 @@
 }
 
 @keyframes typing {
-  0%, 60%, 100% {
+
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
     opacity: 0.6;
   }
+
   30% {
     transform: translateY(-10px);
     opacity: 1;
@@ -718,6 +773,7 @@
 
 /* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
   .chat-window,
   .chat-message,
   .chat-toggle-button,
@@ -741,4 +797,3 @@
     border: 2px solid currentColor;
   }
 }
-
