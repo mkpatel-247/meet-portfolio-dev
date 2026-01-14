@@ -41,8 +41,3 @@ export const EXPERIENCE_DATA: IExperienceDetails[] = [
     ],
   },
 ];
-
-export const EXTRA_DATA: string[] = [
-  // Add any additional context or data here that you want the RAG system to know about,
-  // but isn't necessarily displayed on the main UI.
-];
