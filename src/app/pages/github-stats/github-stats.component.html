@@ -2,54 +2,55 @@
   <app-section-title title="Github Statistics" backgroundText="GitHub"></app-section-title>
 
 
-  @if (loading) {
+  @if (loading()) {
   <div class="flex items-center justify-center py-20" data-aos="fade-up">
     <div class="loading-spinner"></div>
     <span class="ml-4 text-gray-400">Loading GitHub statistics...</span>
   </div>
-  } @else if (error) {
+  } @else if (error(); as errorMessage) {
   <div class="error-message" data-aos="fade-up">
-    <p class="text-red-400">{{ error }}</p>
+    <p class="text-red-400">{{ errorMessage }}</p>
   </div>
-  } @else if (stats) {
+  } @else if (stats(); as githubStats) {
   <div class="github-stats-container" data-aos="fade-up" data-aos-delay="200">
     <!-- User Overview Card -->
     <div class="stats-card user-card" data-aos="fade-up" data-aos-delay="300">
       <div class="user-header">
-        <img [src]="stats.user.avatar_url" [alt]="stats.user.name || stats.user.login" class="user-avatar" />
+        <img [src]="githubStats.user.avatar_url" [alt]="githubStats.user.name || githubStats.user.login"
+          class="user-avatar" />
         <div class="user-info">
-          <h3 class="user-name">{{ stats.user.name || stats.user.login }}</h3>
-          <a [href]="stats.user.html_url" target="_blank" rel="noopener noreferrer" class="user-link"
+          <h3 class="user-name">{{ githubStats.user.name || githubStats.user.login }}</h3>
+          <a [href]="githubStats.user.html_url" target="_blank" rel="noopener noreferrer" class="user-link"
             appCursorHover="link">
-            {{ stats.user.login }}
+            {{ githubStats.user.login }}
           </a>
-          @if (stats.user.bio) {
-          <p class="user-bio">{{ stats.user.bio }}</p>
+          @if (githubStats.user.bio) {
+          <p class="user-bio">{{ githubStats.user.bio }}</p>
           }
         </div>
       </div>
       <div class="user-stats-grid">
         <div class="stat-item">
-          <div class="stat-value">{{ formatNumber(stats.user.public_repos) }}</div>
+          <div class="stat-value">{{ formatNumber(githubStats.user.public_repos) }}</div>
           <div class="stat-label">Repositories</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ formatNumber(stats.user.followers) }}</div>
+          <div class="stat-value">{{ formatNumber(githubStats.user.followers) }}</div>
           <div class="stat-label">Followers</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ formatNumber(stats.user.following) }}</div>
+          <div class="stat-value">{{ formatNumber(githubStats.user.following) }}</div>
           <div class="stat-label">Following</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ formatNumber(stats.totalStars) }}</div>
+          <div class="stat-value">{{ formatNumber(githubStats.totalStars) }}</div>
           <div class="stat-label">Total Stars</div>
         </div>
       </div>
     </div>
 
     <!-- Code Activity Section -->
-    @if (stats.contributionStats) {
+    @if (githubStats.contributionStats) {
     <div class="code-activity-section" data-aos="fade-up" data-aos-delay="600">
       <div class="code-activity-header">
         <h3 class="code-activity-title">
@@ -68,7 +69,7 @@
             <div class="graph-header-right">
               <div class="contribution-badge">
                 <div class="badge-content">
-                  <span class="badge-count">{{ formatNumber(stats.contributionStats.contributionsThisYear) }}
+                  <span class="badge-count">{{ formatNumber(githubStats.contributionStats.contributionsThisYear) }}
                     Contributions</span>
                   <span class="badge-date-range">{{ getOneYearAgoDate() }} - Today</span>
                 </div>
@@ -87,7 +88,7 @@
 
           <div class="contribution-grid-wrapper">
             <div class="contribution-grid">
-              @for (week of getContributionWeeks(); track $index) {
+              @for (week of contributionWeeks(); track $index) {
               <div class="contribution-week">
                 @for (day of week; track day.date || $index) {
                 <div class="contribution-day" [class.empty-day]="!day.date"
@@ -99,7 +100,7 @@
               }
             </div>
             <div class="month-labels">
-              @for (monthLabel of getMonthLabels(); track monthLabel.label + monthLabel.position) {
+              @for (monthLabel of monthLabels(); track monthLabel.label + monthLabel.position) {
               <span class="month-label" [style.left.px]="monthLabel.position * 17">{{ monthLabel.label }}</span>
               }
             </div>
@@ -114,7 +115,7 @@
               <span class="stat-card-label">CURRENT STREAK</span>
             </div>
             <div class="stat-card-content">
-              <span class="stat-card-value">{{ stats.contributionStats.currentStreak }}</span>
+              <span class="stat-card-value">{{ githubStats.contributionStats.currentStreak }}</span>
               <span class="stat-card-unit">Days</span>
               <i class="fas fa-fire stat-card-icon flame-icon" aria-hidden="true"></i>
             </div>
@@ -126,7 +127,7 @@
               <span class="stat-card-label">PULL REQUESTS</span>
             </div>
             <div class="stat-card-content">
-              <span class="stat-card-value">{{ stats.pullRequestsCount || 0 }}</span>
+              <span class="stat-card-value">{{ githubStats.pullRequestsCount || 0 }}</span>
               <i class="fas fa-code-branch stat-card-icon pr-icon" aria-hidden="true"></i>
             </div>
           </div>
@@ -136,11 +137,11 @@
     }
 
     <!-- Top Repositories -->
-    @if (stats.topRepos.length > 0) {
+    @if (githubStats.topRepos.length > 0) {
     <div class="repos-section" data-aos="fade-up" data-aos-delay="400">
       <h3 class="section-title">Top Repositories</h3>
       <div class="repos-grid">
-        @for (repo of stats.topRepos; track repo.id) {
+        @for (repo of githubStats.topRepos; track repo.id) {
         <a [href]="repo.html_url" target="_blank" rel="noopener noreferrer" class="repo-card interactive"
           appCursorHover="link" [hoverScale]="1.02">
           <div class="repo-header">

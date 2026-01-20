@@ -96,6 +96,11 @@ body.light ::-webkit-scrollbar-thumb:hover {
 }
 
 /* --- Enhanced Dark Theme --- */
+/* Ensure mobile viewport overscroll is dark */
+html.dark {
+  background: var(--bg-dark);
+}
+
 body.dark {
   background: linear-gradient(
     135deg,

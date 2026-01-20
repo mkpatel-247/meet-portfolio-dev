@@ -3,10 +3,10 @@
 
   <!-- Timeline/List Structure -->
   <div class="space-y-8 md:space-y-12">
-    @for(work of experienceDetails; track $index; let first = $first){
+    @for(work of experienceDetails(); track $index; let first = $first){
     <div
       class="work-item border-l-4 pl-6 md:pl-8 transition-all duration-300 p-4 md:p-6 rounded-lg hover:bg-gray-800/30 light:hover:bg-gray-100/30 hover:shadow-lg hover:-translate-x-1"
-      [ngClass]="{'border-[--accent-color]': first}" data-aos="fade-up" data-aos-delay="100">
+      [class.border-[--accent-color]]="first" data-aos="fade-up" data-aos-delay="100">
       <p class="text-sm font-mono accent-text mb-2">{{work.startDate}} — {{work.endDate}}</p>
       <h3 class="text-2xl md:text-3xl font-bold mt-1 mb-3">{{work.role}}
         <span class="text-gray-400 text-muted">

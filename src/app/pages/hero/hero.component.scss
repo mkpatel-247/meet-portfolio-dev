@@ -19,3 +19,71 @@ a[href="#work"] {
     z-index: 2;
   }
 }
+
+// Robust Light Theme Overrides
+// Ensures text colors flip correctly even if Tailwind classes have specificity issues
+:host-context(.light) {
+  h1 {
+    span.block {
+      color: rgba(30, 41, 59, 0.9); // text-slate-800/90
+    }
+  }
+
+  // Explicitly specificy color for the "Patel" span which has dark:text-white but relies on inheritance for light
+  h1 span.block span.dark\:text-white {
+    color: inherit;
+  }
+
+  p {
+    color: rgba(30, 41, 59, 0.9); // text-slate-800/90
+  }
+  
+  // Tech stack label
+  span.text-xs {
+    color: rgba(30, 41, 59, 0.5); // dark:text-white/50 -> slate-800/50 approx
+  }
+}
+
+// Custom animations for smoother, immediate entry
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  opacity: 0; // Start hidden
+  animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.animate-fade-left {
+  opacity: 0; // Start hidden
+  animation: fadeLeft 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+// Stagger delays
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-350 { animation-delay: 0.35s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+

@@ -8,23 +8,25 @@ import {
   inject,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { FooterComponent } from './layouts/footer/footer.component';
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
 import { CustomCursorComponent } from './shared/components/custom-cursor/custom-cursor.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { FooterComponent } from './layouts/footer/footer.component';
+// import { ChatComponent } from './chat/chat.component';
 import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    NavbarComponent,
-    FooterComponent,
     CustomCursorComponent,
     LoaderComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

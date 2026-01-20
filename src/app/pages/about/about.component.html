@@ -16,7 +16,7 @@
 
     <!-- Right Column: Narrative Text -->
     <div class="md:col-span-2 space-y-6 text-lg text-gray-400 text-muted leading-relaxed">
-      @for (points of aboutMe; track $index) {
+      @for (points of aboutMe(); track $index) {
       <p>
         {{points}}
       </p>

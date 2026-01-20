@@ -129,7 +129,7 @@
   border: 1px solid rgba(148, 163, 184, 0.25);
   transition: all 0.3s ease;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba(0, 0, 0, 0.15);
   }
@@ -141,7 +141,7 @@
   color: var(--text-dark, #f9fafb);
   letter-spacing: -0.02em;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     color: var(--text-light, #1f2937);
   }
 }
@@ -152,7 +152,7 @@
   max-width: 32rem;
   line-height: 1.6;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     color: var(--muted-light, #6b7280);
   }
 }
@@ -179,7 +179,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     background: rgba(255, 255, 255, 0.9);
     border-color: var(--border-light, rgba(229, 231, 235, 0.9));
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -197,7 +197,7 @@
   color: var(--text-dark-secondary, #e5e7eb);
   font-weight: 500;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     color: var(--text-light-secondary, #374151);
   }
 }
@@ -209,7 +209,7 @@
   border-color: var(--accent-color, #ff8c00);
   background: rgba(15, 23, 42, 0.95);
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 8px 24px rgba(255, 140, 0, 0.15);
   }
@@ -240,7 +240,7 @@
   transition: all 0.3s ease;
   border-radius: 0.5rem;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     border-bottom-color: var(--border-light, rgba(229, 231, 235, 0.8));
   }
 
@@ -248,7 +248,7 @@
     background: rgba(15, 23, 42, 0.5);
     padding-left: 0.75rem;
 
-    :host-context(body.light) & {
+    :host-context(.light) & {
       background: rgba(0, 0, 0, 0.03);
     }
   }
@@ -259,7 +259,7 @@
   color: var(--text-dark-secondary, #e5e7eb);
   font-weight: 500;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     color: var(--text-light-secondary, #374151);
   }
 }
@@ -294,7 +294,7 @@
   border: 1px solid var(--border-dark, rgba(55, 65, 81, 0.9));
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     background: rgba(255, 255, 255, 0.85);
     border-color: var(--border-light, rgba(229, 231, 235, 0.9));
   }
@@ -305,7 +305,7 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   border-color: var(--accent-color, #ff8c00);
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     box-shadow: 0 8px 24px rgba(255, 140, 0, 0.15);
   }
 }
@@ -326,14 +326,14 @@
   color: var(--text-dark, #f9fafb);
   font-weight: 500;
 
-  :host-context(body.light) & {
+  :host-context(.light) & {
     color: var(--text-light, #1f2937);
   }
 }
 
 /* --------- LIGHT THEME OVERRIDES --------- */
 
-:host-context(body.light) {
+:host-context(.light) {
   .bento-card {
     background: linear-gradient(
       145deg,
