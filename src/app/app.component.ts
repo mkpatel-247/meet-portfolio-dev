@@ -14,7 +14,7 @@ import { CustomCursorComponent } from './shared/components/custom-cursor/custom-
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
-import { ChatComponent } from './chat/chat.component';
+// import { ChatComponent } from './chat/chat.component';
 import { GoogleAnalyticsService } from './core/services/google-analytics.service';
 import { filter } from 'rxjs';
 
@@ -26,8 +26,7 @@ import { filter } from 'rxjs';
     CustomCursorComponent,
     LoaderComponent,
     NavbarComponent,
-    FooterComponent,
-    ChatComponent
+    FooterComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
